@@ -204,14 +204,10 @@ export default function CartPage() {
 
               {/* Security Notice */}
               <div className="mt-6 text-center">
-                <div className="flex items-center justify-center space-x-4 text-xs text-stone-500">
+                <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-stone-500">
+                  <span>Pay cash on delivery</span>
+                  <span className="text-stone-300" aria-hidden="true">&middot;</span>
                   <div className="flex items-center space-x-2">
-                    <span className="text-green-600">🔒</span>
-                    <span>Secure checkout</span>
-                  </div>
-                  <span className="text-stone-300">•</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-peacock-600">📞</span>
                     <span>Call us at <strong>{storeContact.phoneDisplay}</strong></span>
                   </div>
                 </div>

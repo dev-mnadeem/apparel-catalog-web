@@ -470,56 +470,25 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* WhatsApp Benefits */}
-              <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
-                <div className="text-center mb-4">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <PhoneIcon className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-stone-900">Request contact details</h3>
-                </div>
-                <div className="space-y-3 text-sm text-stone-600">
-                  <div className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Instant order confirmation</span>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Real-time order tracking</span>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Delivery updates & notifications</span>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Direct customer support</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Security & Trust */}
               <div className="bg-white rounded-2xl shadow-xl p-6">
-                <div className="text-center mb-4">
-                  <div className="w-16 h-16 bg-peacock-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <ShieldCheckIcon className="h-8 w-8 text-peacock-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-stone-900">Secure & Trusted</h3>
+                <div className="flex items-center gap-3">
+                  <PhoneIcon className="h-6 w-6 text-peacock-600" aria-hidden="true" />
+                  <h3 className="text-lg font-bold text-stone-900">What happens next</h3>
                 </div>
-                <div className="space-y-3 text-sm text-stone-600">
-                  <div className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-peacock-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>SSL encrypted checkout</span>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-peacock-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>No payment information stored</span>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircleIcon className="h-5 w-5 text-peacock-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>100% secure transaction</span>
-                  </div>
-                </div>
+                <ul className="mt-4 space-y-3 text-sm text-stone-600">
+                  <li className="flex items-start">
+                    <CheckCircleIcon className="h-5 w-5 text-peacock-500 mr-2 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                    <span>This sends a request to the shop; it is not a confirmed order until the shop replies.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircleIcon className="h-5 w-5 text-peacock-500 mr-2 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                    <span>The shop contacts you on WhatsApp to confirm stock, delivery and cash on delivery.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <ShieldCheckIcon className="h-5 w-5 text-peacock-500 mr-2 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                    <span>No card or payment details are collected on this site.</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
