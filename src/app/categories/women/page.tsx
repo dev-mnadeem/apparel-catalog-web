@@ -109,23 +109,23 @@ export default function WomensCategoryPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-amber-50 pt-32">
+    <div className="min-h-screen bg-madder-50">
       {/* Navigation */}
       <div className="bg-white shadow-sm border-b border-black/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link 
               href="/" 
-              className="flex items-center text-gray-600 hover:text-black transition-colors"
+              className="flex items-center text-stone-600 hover:text-black transition-colors"
             >
               <ArrowLeftIcon className="h-5 w-5 mr-2" />
               Back to Home
             </Link>
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-600 hover:text-black transition-colors">
+              <button className="p-2 text-stone-600 hover:text-black transition-colors">
                 <HeartIcon className="h-6 w-6" />
               </button>
-              <button className="p-2 text-gray-600 hover:text-black transition-colors">
+              <button className="p-2 text-stone-600 hover:text-black transition-colors">
                 <ShoppingBagIcon className="h-6 w-6" />
               </button>
             </div>
@@ -141,7 +141,7 @@ export default function WomensCategoryPage() {
               <Link
                 key={category.name}
                 href={category.href}
-                className="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-0"
+                className="text-stone-700 hover:text-madder-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-0"
               >
                 {category.name}
               </Link>
@@ -151,14 +151,14 @@ export default function WomensCategoryPage() {
 
         {/* Featured Products Section */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold text-black mb-6 font-poppins">Featured Silk Scarves</h2>
-          <p className="text-gray-600 mb-8 text-center">Explore our handpicked selection of premium silk scarves</p>
+          <h2 className="text-2xl font-bold text-black mb-6">Featured Silk Scarves</h2>
+          <p className="text-stone-600 mb-8 text-center">Explore our handpicked selection of premium silk scarves</p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
               <div 
                 key={product.id} 
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group border border-gray-100 h-full flex flex-col"
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group border border-stone-100 h-full flex flex-col"
               >
                 <div className="relative overflow-hidden">
                   <img 
@@ -176,14 +176,14 @@ export default function WomensCategoryPage() {
                   
                   {/* Wishlist Button */}
                   <button className="absolute top-3 left-3 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110">
-                    <svg className="h-4 w-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-4 w-4 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                   </button>
                 </div>
                 
                 <div className="p-4 flex-1 flex flex-col">
-                  <h3 className="text-base font-semibold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors line-clamp-2 min-h-[3rem]">
+                  <h3 className="text-base font-semibold text-stone-900 mb-2 group-hover:text-madder-600 transition-colors line-clamp-2 min-h-[3rem]">
                     {product.name}
                   </h3>
                   
@@ -193,7 +193,7 @@ export default function WomensCategoryPage() {
                       {[1, 2, 3, 4, 5].map((star) => (
                         <svg 
                           key={star} 
-                          className={`h-3 w-3 ${star <= Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                          className={`h-3 w-3 ${star <= Math.floor(product.rating) ? 'text-saffron-400 fill-current' : 'text-stone-300'}`}
                           fill="currentColor" 
                           viewBox="0 0 20 20"
                         >
@@ -201,17 +201,17 @@ export default function WomensCategoryPage() {
                         </svg>
                       ))}
                     </div>
-                    <span className="text-gray-600 text-xs ml-2 font-medium">({product.rating})</span>
-                    <span className="text-gray-400 text-xs ml-2">• {product.reviews} reviews</span>
+                    <span className="text-stone-600 text-xs ml-2 font-medium">({product.rating})</span>
+                    <span className="text-stone-400 text-xs ml-2">• {product.reviews} reviews</span>
                   </div>
 
                   {/* Price */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
-                      <span className="text-lg font-bold text-gray-900">{product.price}</span>
-                      <span className="text-gray-500 line-through text-sm">{product.originalPrice}</span>
+                      <span className="text-lg font-bold text-stone-900">{product.price}</span>
+                      <span className="text-stone-500 line-through text-sm">{product.originalPrice}</span>
                     </div>
-                    <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-2 py-1 rounded-full text-xs font-bold shadow-md">
+                    <span className="bg-gradient-to-r from-madder-500 to-madder-600 text-white px-2 py-1 rounded-full text-xs font-bold shadow-md">
                       SALE
                     </span>
                   </div>
@@ -226,14 +226,14 @@ export default function WomensCategoryPage() {
                         image: product.image,
                         category: product.category
                       })}
-                      className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-2.5 px-4 rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 font-medium text-center mt-auto group-hover:shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                      className="w-full bg-gradient-to-r from-madder-500 to-madder-600 text-white py-2.5 px-4 rounded-lg hover:from-madder-600 hover:to-madder-700 transition-all duration-300 font-medium text-center mt-auto group-hover:shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-madder-500 focus:ring-offset-2"
                     >
                       ADD TO BAG
                     </button>
                   ) : (
                     <button 
                       disabled
-                      className="w-full bg-gray-400 text-white py-2.5 px-4 rounded-lg cursor-not-allowed font-medium mt-auto text-sm"
+                      className="w-full bg-stone-400 text-white py-2.5 px-4 rounded-lg cursor-not-allowed font-medium mt-auto text-sm"
                     >
                       COMING SOON
                     </button>
@@ -245,25 +245,25 @@ export default function WomensCategoryPage() {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center bg-white p-8 rounded-xl shadow-md border border-gray-100">
-          <h3 className="text-2xl font-bold text-black mb-4 font-poppins">Explore More Scarves</h3>
-          <p className="text-gray-600 mb-6">Discover our complete collection of premium silk scarves and accessories</p>
+        <div className="text-center bg-white p-8 rounded-xl shadow-md border border-stone-100">
+          <h3 className="text-2xl font-bold text-black mb-4">Explore More Scarves</h3>
+          <p className="text-stone-600 mb-6">Discover our complete collection of premium silk scarves and accessories</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/categories/women/silk-scarves"
-              className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors font-medium"
+              className="bg-black text-white px-6 py-3 rounded-lg hover:bg-stone-800 transition-colors font-medium"
             >
               View All Silk Scarves
             </Link>
             <Link
               href="/new-arrivals"
-              className="bg-amber-500 text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition-colors font-medium"
+              className="bg-madder-500 text-white px-6 py-3 rounded-lg hover:bg-madder-600 transition-colors font-medium"
             >
               New Arrivals
             </Link>
             <Link
               href="/sale"
-              className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors font-medium"
+              className="bg-madder-500 text-white px-6 py-3 rounded-lg hover:bg-madder-600 transition-colors font-medium"
             >
               Special Offers
             </Link>

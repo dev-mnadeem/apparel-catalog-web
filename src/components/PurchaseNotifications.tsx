@@ -88,7 +88,7 @@ const SimulatedActivityFeed = () => {
       {visibleNotifications.map((notification) => (
         <div
           key={notification.id}
-          className="bg-white border border-amber-200 rounded-lg shadow-lg p-4 max-w-xs animate-slide-in-left"
+          className="bg-white border border-madder-200 rounded-lg shadow-lg p-4 max-w-xs animate-slide-in-left"
           style={{
             animation: 'slideInLeft 0.5s ease-out',
           }}
@@ -97,7 +97,7 @@ const SimulatedActivityFeed = () => {
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
               <span className="text-2xl">{notification.avatar}</span>
-              <span className="text-sm font-semibold text-gray-800">
+              <span className="text-sm font-semibold text-stone-800">
                 {notification.customerName}
               </span>
             </div>
@@ -105,29 +105,29 @@ const SimulatedActivityFeed = () => {
               type="button"
               aria-label="Dismiss"
               onClick={() => removeNotification(notification.id)}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-stone-400 hover:text-stone-600 transition-colors"
             >
               <XMarkIcon className="h-4 w-4" />
             </button>
           </div>
 
           {/* Purchase Message */}
-          <div className="text-sm text-gray-600 mb-2">
+          <div className="text-sm text-stone-600 mb-2">
             Just looking at{' '}
-            <span className="font-semibold text-amber-600">
+            <span className="font-semibold text-madder-600">
               {notification.productName}
             </span>
           </div>
 
           {/* Time */}
-          <div className="text-xs text-gray-400">
+          <div className="text-xs text-stone-400">
             {notification.timeAgo}
           </div>
 
           {/* Progress bar */}
-          <div className="mt-2 w-full bg-gray-200 rounded-full h-1">
+          <div className="mt-2 w-full bg-stone-200 rounded-full h-1">
             <div 
-              className="bg-amber-500 h-1 rounded-full transition-all duration-300"
+              className="bg-madder-500 h-1 rounded-full transition-all duration-300"
               style={{ width: '100%' }}
             />
           </div>

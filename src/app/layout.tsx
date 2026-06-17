@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import '@fontsource/jost/latin-400.css'
+import '@fontsource/jost/latin-500.css'
+import '@fontsource/jost/latin-600.css'
+import '@fontsource/cormorant-garamond/latin-600.css'
+import '@fontsource/cormorant-garamond/latin-700.css'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import { CombinedProviders } from '@/contexts/CombinedProviders'
 import CartNotificationContainer from '@/components/CartNotificationContainer'
-
-const poppins = Poppins({ 
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-poppins',
-})
+import SiteFooter from '@/components/SiteFooter'
+import { storeContact } from '@/lib/store'
 
 export const metadata: Metadata = {
   title: 'Trendy Folds - Premium Fashion Clothing Store',
@@ -63,7 +63,7 @@ export default function RootLayout({
       <head>
         <link rel="apple-touch-icon" href="/images/icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#1E1B18" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -76,60 +76,30 @@ export default function RootLayout({
               "description": "Premium fashion clothing store offering the latest trends and style essentials",
               "address": {
                 "@type": "PostalAddress",
-                "addressCountry": "US"
+                "addressCountry": "PK"
               },
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "customer service",
                 "email": "support@trendyfolds.com"
               },
-              "sameAs": [
-                "https://facebook.com/trendyfolds",
-                "https://instagram.com/trendyfolds",
-                "https://twitter.com/trendyfolds"
-              ]
+              "sameAs": [storeContact.facebookUrl, storeContact.instagramUrl]
             })
           }}
         />
       </head>
-      <body className={poppins.className}>
+      <body className="flex min-h-screen flex-col bg-paper font-sans text-stone-800 antialiased">
+        <a href="#content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-white focus:px-4 focus:py-2">
+          Skip to content
+        </a>
         <CombinedProviders>
-          {/* Enhanced Navigation */}
           <Navigation />
-
-          {children}
-          
-          {/* Cart Notifications */}
+          <div id="content" className="flex-1">
+            {children}
+          </div>
           <CartNotificationContainer />
         </CombinedProviders>
-
-        {/* Simple Footer */}
-        <footer className="bg-gray-900 text-white py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div>
-                <h3 className="text-yellow-200 text-lg font-semibold mb-4">Trendy Folds</h3>
-                <p className="text-gray-300">Premium fashion for every style.</p>
-              </div>
-              <div>
-                <h3 className="text-yellow-200 text-lg font-semibold mb-4">Shop</h3>
-                <ul className="space-y-2 text-gray-300">
-                  <li><a href="/categories/women" className="hover:text-white">Women</a></li>
-                  <li><a href="/categories/men" className="hover:text-white">Men</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-yellow-200 text-lg font-semibold mb-4">Support</h3>
-                <ul className="space-y-2 text-gray-300">
-                  <li><a href="/shipping" className="hover:text-white">Shipping</a></li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-              © 2025 Trendy Folds. All rights reserved.
-            </div>
-          </div>
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   )

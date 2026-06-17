@@ -121,40 +121,40 @@ export default function ShoppingPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-stone-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <Link 
               href="/"
-              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200"
+              className="flex items-center text-stone-600 hover:text-stone-900 transition-colors duration-200"
             >
               <ArrowLeftIcon className="w-5 h-5 mr-2" />
               Back to Home
             </Link>
-            <h1 className="text-2xl font-bold text-gray-900">Continue Shopping</h1>
+            <h1 className="text-2xl font-bold text-stone-900">Continue Shopping</h1>
             <div className="w-20"></div> {/* Spacer for centering */}
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">Discover More Products</h2>
-          <p className="text-xl text-gray-600">Explore our premium collection of fashion accessories</p>
+          <h2 className="text-4xl font-bold text-stone-900 mb-6">Discover More Products</h2>
+          <p className="text-xl text-stone-600">Explore our premium collection of fashion accessories</p>
         </div>
 
         {/* Categories Grid */}
         <div className="mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Shop by Category</h3>
+          <h3 className="text-2xl font-bold text-stone-900 mb-8 text-center">Shop by Category</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories.map((category) => (
               <Link
                 key={category.name}
                 href={category.href}
-                className="group bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105"
+                className="group bg-white rounded-xl shadow-sm border border-stone-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105"
               >
                 <div className="aspect-square mb-4 overflow-hidden rounded-lg">
                   <img
@@ -163,11 +163,11 @@ export default function ShoppingPage() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">{category.name}</h4>
-                <p className="text-gray-600 mb-3">{category.description}</p>
+                <h4 className="text-lg font-semibold text-stone-900 mb-2">{category.name}</h4>
+                <p className="text-stone-600 mb-3">{category.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">{category.count} products</span>
-                  <span className="text-amber-600 font-medium group-hover:text-amber-700 transition-colors">
+                  <span className="text-sm text-stone-500">{category.count} products</span>
+                  <span className="text-madder-600 font-medium group-hover:text-madder-700 transition-colors">
                     Shop Now →
                   </span>
                 </div>
@@ -178,10 +178,10 @@ export default function ShoppingPage() {
 
         {/* Featured Products */}
         <div className="mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Featured Products</h3>
+          <h3 className="text-2xl font-bold text-stone-900 mb-8 text-center">Featured Products</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div key={product.id} className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="aspect-square overflow-hidden">
                   <img
                     src={productImage(product.image)}
@@ -191,17 +191,17 @@ export default function ShoppingPage() {
                 </div>
                 <div className="p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-amber-600 font-medium bg-amber-50 px-2 py-1 rounded-full">
+                    <span className="text-xs text-madder-600 font-medium bg-madder-50 px-2 py-1 rounded-full">
                       {product.category}
                     </span>
                     <div className="flex items-center space-x-1">
-                      <StarIcon className="w-4 h-4 text-yellow-400 fill-current" />
-                      <span className="text-sm text-gray-600">{product.rating}</span>
+                      <StarIcon className="w-4 h-4 text-saffron-400 fill-current" />
+                      <span className="text-sm text-stone-600">{product.rating}</span>
                     </div>
                   </div>
-                  <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.name}</h4>
+                  <h4 className="font-semibold text-stone-900 mb-2 line-clamp-2">{product.name}</h4>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-900">{product.price}</span>
+                    <span className="text-lg font-bold text-stone-900">{product.price}</span>
                     <button
                       onClick={(e) => {
                         e.preventDefault()
@@ -214,7 +214,7 @@ export default function ShoppingPage() {
                           category: product.category
                         })
                       }}
-                      className="bg-black text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200 text-sm"
+                      className="bg-black text-white px-4 py-2 rounded-lg font-medium hover:bg-stone-800 transition-colors duration-200 text-sm"
                     >
                       Add to Bag
                     </button>
@@ -227,20 +227,20 @@ export default function ShoppingPage() {
 
         {/* Call to Action */}
         <div className="text-center">
-          <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8 border border-amber-200">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Shop More?</h3>
-            <p className="text-gray-600 mb-6">Explore our complete collection and find your perfect style</p>
+          <div className="bg-gradient-to-r from-madder-50 to-madder-50 rounded-2xl p-8 border border-madder-200">
+            <h3 className="text-2xl font-bold text-stone-900 mb-4">Ready to Shop More?</h3>
+            <p className="text-stone-600 mb-6">Explore our complete collection and find your perfect style</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/categories/women/silk-scarves"
-                className="inline-flex items-center px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-200"
+                className="inline-flex items-center px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-stone-800 transition-colors duration-200"
               >
                 <ShoppingBagIcon className="w-5 h-5 mr-2" />
                 Shop Women&apos;s Scarves
               </Link>
               <Link
                 href="/categories/men/pocket-square"
-                className="inline-flex items-center px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors duration-200"
+                className="inline-flex items-center px-6 py-3 bg-madder-600 text-white font-semibold rounded-lg hover:bg-madder-700 transition-colors duration-200"
               >
                 <ShoppingBagIcon className="w-5 h-5 mr-2" />
                 Shop Men&apos;s Pocket Squares

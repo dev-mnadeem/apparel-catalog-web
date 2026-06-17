@@ -197,7 +197,7 @@ export default function SalePage() {
 
 
   return (
-    <div className="min-h-screen bg-amber-50">
+    <div className="min-h-screen bg-madder-50">
       {/* Success Notification */}
       {showSuccess && (
         <div className="fixed top-24 right-4 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-pulse">
@@ -216,19 +216,19 @@ export default function SalePage() {
           <div className="flex items-center justify-between h-16">
             <Link 
               href="/" 
-              className="flex items-center text-gray-600 hover:text-black transition-colors"
+              className="flex items-center text-stone-600 hover:text-black transition-colors"
             >
               <ArrowLeftIcon className="h-5 w-5 mr-2" />
               Back to Home
             </Link>
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-600 hover:text-black transition-colors">
+              <button className="p-2 text-stone-600 hover:text-black transition-colors">
                 <HeartIcon className="h-6 w-6" />
               </button>
-              <Link href="/checkout" className="relative p-2 text-gray-600 hover:text-black transition-colors">
+              <Link href="/checkout" className="relative p-2 text-stone-600 hover:text-black transition-colors">
                 <ShoppingBagIcon className="h-6 w-6" />
                 {state.totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-madder-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                     {state.totalItems > 99 ? '99+' : state.totalItems}
                   </span>
                 )}
@@ -239,10 +239,10 @@ export default function SalePage() {
       </div>
 
       {/* Page Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-black mb-4 font-poppins">Special Discount Offers</h1>
-          <p className="text-xl text-gray-600 font-poppins">Amazing deals and discounts on premium fashion items</p>
+          <h1 className="text-4xl font-bold text-black mb-4">Special Discount Offers</h1>
+          <p className="text-xl text-stone-600">Amazing deals and discounts on premium fashion items</p>
         </div>
 
         {/* Products Grid */}
@@ -250,7 +250,7 @@ export default function SalePage() {
           {saleItems.map((item) => (
             <div 
               key={item.id} 
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 group border border-gray-100 h-full flex flex-col w-full"
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 group border border-stone-100 h-full flex flex-col w-full"
             >
               {/* Product Image - Clickable for product details */}
               <Link href={`/product/${item.id}`} className="block">
@@ -269,9 +269,9 @@ export default function SalePage() {
                     }}
                   />
                   {/* Fallback placeholder */}
-                  <div className="hidden w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                    <div className="text-center text-gray-500">
-                      <div className="w-16 h-16 mx-auto mb-2 bg-gray-400 rounded-full flex items-center justify-center">
+                  <div className="hidden w-full h-full bg-gradient-to-br from-stone-200 to-stone-300 flex items-center justify-center">
+                    <div className="text-center text-stone-500">
+                      <div className="w-16 h-16 mx-auto mb-2 bg-stone-400 rounded-full flex items-center justify-center">
                         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
@@ -281,12 +281,12 @@ export default function SalePage() {
                   </div>
 
                   {/* Discount Badge */}
-                  <div className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                  <div className="absolute top-4 right-4 bg-gradient-to-r from-madder-500 to-madder-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                     {item.discount}
                   </div>
                   {/* Wishlist Button */}
                   <button className="absolute top-4 left-4 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110">
-                    <HeartIcon className="h-5 w-5 text-gray-700" />
+                    <HeartIcon className="h-5 w-5 text-stone-700" />
                   </button>
                 </div>
               </Link>
@@ -302,20 +302,20 @@ export default function SalePage() {
                       {[1, 2, 3, 4, 5].map((star) => (
                         <StarIcon 
                           key={star} 
-                          className={`h-4 w-4 ${star <= Math.floor(item.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                          className={`h-4 w-4 ${star <= Math.floor(item.rating) ? 'text-saffron-400 fill-current' : 'text-stone-300'}`} 
                         />
                       ))}
                     </div>
-                    <span className="text-gray-600 text-sm ml-2 font-medium">({item.rating})</span>
+                    <span className="text-stone-600 text-sm ml-2 font-medium">({item.rating})</span>
                   </div>
 
                   {/* Price */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <span className="text-xl font-bold text-black">{item.price}</span>
-                      <span className="text-gray-500 line-through">{item.originalPrice}</span>
+                      <span className="text-stone-500 line-through">{item.originalPrice}</span>
                     </div>
-                    <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                    <span className="bg-madder-500 text-white px-2 py-1 rounded text-xs font-bold">
                       SALE
                     </span>
                   </div>
@@ -324,7 +324,7 @@ export default function SalePage() {
                 {/* View Details Link */}
                 <Link 
                   href={`/product/${item.id}`}
-                  className="w-full text-center text-gray-600 hover:text-red-600 transition-colors duration-200 font-medium text-sm mb-2 hover:underline"
+                  className="w-full text-center text-stone-600 hover:text-madder-600 transition-colors duration-200 font-medium text-sm mb-2 hover:underline"
                 >
                   View Details
                 </Link>
@@ -333,7 +333,7 @@ export default function SalePage() {
                 <button 
                   onClick={() => handleAddToCart(item)}
                   disabled={addingToCart === item.id}
-                  className="w-full bg-red-500 text-white py-3 px-4 rounded-lg hover:bg-red-600 disabled:bg-red-400 transition-colors font-medium flex items-center justify-center gap-2"
+                  className="w-full bg-madder-500 text-white py-3 px-4 rounded-lg hover:bg-madder-600 disabled:bg-madder-400 transition-colors font-medium flex items-center justify-center gap-2"
                 >
                   {addingToCart === item.id ? (
                     <>

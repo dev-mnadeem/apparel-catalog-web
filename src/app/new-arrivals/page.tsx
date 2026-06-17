@@ -363,7 +363,7 @@ export default function NewArrivalsPage() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-amber-50 pt-32">
+    <div className="min-h-screen bg-gradient-to-br from-madder-50 via-white to-madder-50">
       {/* Success Notification */}
       {showSuccess && (
         <div className="fixed top-24 right-4 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-pulse">
@@ -381,23 +381,23 @@ export default function NewArrivalsPage() {
                       <div className="flex items-center justify-between h-16">
               <Link 
                 href="/" 
-                className="flex items-center text-gray-600 hover:text-black transition-colors px-4 py-2 min-w-[135px]"
+                className="flex items-center text-stone-600 hover:text-black transition-colors px-4 py-2 min-w-[135px]"
               >
                 <ArrowLeftIcon className="h-5 w-5 mr-2" />
                 Back to Home
               </Link>
               <div className="text-center">
-                <h1 className="text-lg font-semibold text-gray-900">New Arrivals</h1>
-                <p className="text-sm text-gray-500">Latest Collection 2025</p>
+                <h1 className="text-lg font-semibold text-stone-900">New Arrivals</h1>
+                <p className="text-sm text-stone-500">Latest Collection 2025</p>
               </div>
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-600 hover:text-black transition-colors">
+              <button className="p-2 text-stone-600 hover:text-black transition-colors">
                 <HeartIcon className="h-6 w-6" />
               </button>
-              <Link href="/checkout" className="relative p-2 text-gray-600 hover:text-black transition-colors">
+              <Link href="/checkout" className="relative p-2 text-stone-600 hover:text-black transition-colors">
                 <ShoppingBagIcon className="h-6 w-6" />
                 {state.totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-madder-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                     {state.totalItems > 99 ? '99+' : state.totalItems}
                   </span>
                 )}
@@ -415,7 +415,7 @@ export default function NewArrivalsPage() {
             <Link
               key={category.name}
               href={category.href}
-              className="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-0"
+              className="text-stone-700 hover:text-madder-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-0"
             >
               {category.name}
             </Link>
@@ -427,12 +427,12 @@ export default function NewArrivalsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="flex items-center justify-between mb-10">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 font-poppins mb-2">Latest Arrivals</h2>
-            <p className="text-gray-600">Discover our newest premium fashion pieces</p>
+            <h2 className="text-3xl font-bold text-stone-900 mb-2">Latest Arrivals</h2>
+            <p className="text-stone-600">Discover our newest premium fashion pieces</p>
           </div>
-          <div className="flex items-center space-x-4 text-sm text-gray-500">
+          <div className="flex items-center space-x-4 text-sm text-stone-500">
             <span>Showing {newArrivalProducts.length} products</span>
-            <div className="w-px h-5 bg-gray-300"></div>
+            <div className="w-px h-5 bg-stone-300"></div>
             <span>New Collection 2025</span>
           </div>
         </div>
@@ -441,7 +441,7 @@ export default function NewArrivalsPage() {
           {newArrivalProducts.map((product) => (
             <div 
               key={product.id} 
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group border border-gray-100 h-full flex flex-col"
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group border border-stone-100 h-full flex flex-col"
             >
               <div className="relative overflow-hidden">
                 <img 
@@ -457,14 +457,14 @@ export default function NewArrivalsPage() {
                 
                 {/* Wishlist Button */}
                 <button className="absolute top-3 left-3 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110">
-                  <svg className="h-4 w-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </button>
               </div>
               
               <div className="p-4 flex-1 flex flex-col">
-                <h3 className="text-base font-semibold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors min-h-[3rem] overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                <h3 className="text-base font-semibold text-stone-900 mb-2 group-hover:text-madder-600 transition-colors min-h-[3rem] overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                   {product.name}
                 </h3>
                 
@@ -474,7 +474,7 @@ export default function NewArrivalsPage() {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <svg 
                         key={star} 
-                        className={`h-3 w-3 ${star <= Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                        className={`h-3 w-3 ${star <= Math.floor(product.rating) ? 'text-saffron-400 fill-current' : 'text-stone-300'}`}
                         fill="currentColor" 
                         viewBox="0 0 20 20"
                       >
@@ -482,17 +482,17 @@ export default function NewArrivalsPage() {
                       </svg>
                     ))}
                   </div>
-                  <span className="text-gray-600 text-xs ml-2 font-medium">({product.rating})</span>
-                  <span className="text-gray-400 text-xs ml-2">• {product.reviews} reviews</span>
+                  <span className="text-stone-600 text-xs ml-2 font-medium">({product.rating})</span>
+                  <span className="text-stone-400 text-xs ml-2">• {product.reviews} reviews</span>
                 </div>
 
                 {/* Price */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
-                    <span className="text-lg font-bold text-gray-900">{product.price}</span>
-                    <span className="text-gray-500 line-through text-sm">{product.originalPrice}</span>
+                    <span className="text-lg font-bold text-stone-900">{product.price}</span>
+                    <span className="text-stone-500 line-through text-sm">{product.originalPrice}</span>
                   </div>
-                  <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-2 py-1 rounded-full text-xs font-bold shadow-md">
+                  <span className="bg-gradient-to-r from-madder-500 to-madder-600 text-white px-2 py-1 rounded-full text-xs font-bold shadow-md">
                     SALE
                   </span>
                 </div>
@@ -500,7 +500,7 @@ export default function NewArrivalsPage() {
                 {/* View Details Link */}
                 <Link 
                   href={`/product/${product.id}`}
-                  className="w-full text-center text-gray-600 hover:text-amber-600 transition-colors duration-200 font-medium text-sm mb-2 hover:underline"
+                  className="w-full text-center text-stone-600 hover:text-madder-600 transition-colors duration-200 font-medium text-sm mb-2 hover:underline"
                 >
                   View Details
                 </Link>
@@ -509,7 +509,7 @@ export default function NewArrivalsPage() {
                 <button
                   onClick={() => handleAddToCart(product)}
                   disabled={addingToCart === product.id}
-                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-2.5 px-4 rounded-lg hover:from-amber-600 hover:to-amber-700 disabled:from-amber-400 disabled:to-amber-500 transition-all duration-300 font-medium text-center group-hover:shadow-md text-sm flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-madder-500 to-madder-600 text-white py-2.5 px-4 rounded-lg hover:from-madder-600 hover:to-madder-700 disabled:from-madder-400 disabled:to-madder-500 transition-all duration-300 font-medium text-center group-hover:shadow-md text-sm flex items-center justify-center gap-2"
                 >
                   {addingToCart === product.id ? (
                     <>

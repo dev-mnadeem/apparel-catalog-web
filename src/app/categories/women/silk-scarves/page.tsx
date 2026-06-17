@@ -143,23 +143,23 @@ export default function WomensSilkScarfPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-amber-50">
+    <div className="min-h-screen bg-madder-50">
       {/* Navigation */}
       <div className="bg-white shadow-sm border-b border-black/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link 
               href="/" 
-              className="flex items-center text-gray-600 hover:text-black transition-colors"
+              className="flex items-center text-stone-600 hover:text-black transition-colors"
             >
               <ArrowLeftIcon className="h-5 w-5 mr-2" />
               Back to Home
             </Link>
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-600 hover:text-black transition-colors">
+              <button className="p-2 text-stone-600 hover:text-black transition-colors">
                 <HeartIcon className="h-6 w-6" />
               </button>
-              <button className="p-2 text-gray-600 hover:text-black transition-colors">
+              <button className="p-2 text-stone-600 hover:text-black transition-colors">
                 <ShoppingBagIcon className="h-6 w-6" />
               </button>
             </div>
@@ -168,10 +168,10 @@ export default function WomensSilkScarfPage() {
       </div>
 
       {/* Page Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-black mb-4 font-poppins">Women&apos;s Silk Scarves</h1>
-          <p className="text-xl text-gray-600 font-poppins">Discover our premium collection of elegant silk scarves</p>
+          <h1 className="text-4xl font-bold text-black mb-4">Women&apos;s Silk Scarves</h1>
+          <p className="text-xl text-stone-600">Discover our premium collection of elegant silk scarves</p>
         </div>
 
         {/* Products Grid */}
@@ -192,7 +192,7 @@ export default function WomensSilkScarfPage() {
                 <div className="absolute top-4 right-4 bg-black text-white px-3 py-1 rounded-full text-sm font-medium">
                   {scarf.isCustomizable ? 'CUSTOM' : 'NEW IN'}
                 </div>
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg border border-gray-200">
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-stone-800 px-3 py-1 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg border border-stone-200">
                   <div className="flex items-center space-x-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
@@ -200,8 +200,8 @@ export default function WomensSilkScarfPage() {
                     <span>Click to View</span>
                   </div>
                 </div>
-                <button className="absolute top-4 left-4 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors opacity-0 group-hover:opacity-100">
-                  <HeartIcon className="h-5 w-5 text-gray-600" />
+                <button className="absolute top-4 left-4 p-2 bg-white rounded-full shadow-md hover:bg-stone-50 transition-colors opacity-0 group-hover:opacity-100">
+                  <HeartIcon className="h-5 w-5 text-stone-600" />
                 </button>
               </div>
               
@@ -214,37 +214,37 @@ export default function WomensSilkScarfPage() {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <StarIcon 
                         key={star} 
-                        className={`h-4 w-4 ${star <= Math.floor(scarf.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                        className={`h-4 w-4 ${star <= Math.floor(scarf.rating) ? 'text-saffron-400 fill-current' : 'text-stone-300'}`} 
                       />
                     ))}
                   </div>
-                  <span className="text-gray-600 text-sm ml-2">({scarf.rating} out of 5)</span>
-                  <span className="text-gray-500 text-sm ml-2">• {scarf.reviews} reviews</span>
+                  <span className="text-stone-600 text-sm ml-2">({scarf.rating} out of 5)</span>
+                  <span className="text-stone-500 text-sm ml-2">• {scarf.reviews} reviews</span>
                 </div>
 
                 {/* Price */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-3">
                     <span className="text-xl font-bold text-black">{scarf.price}</span>
-                    <span className="text-gray-500 line-through">{scarf.originalPrice}</span>
+                    <span className="text-stone-500 line-through">{scarf.originalPrice}</span>
                   </div>
-                  <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                  <span className="bg-madder-500 text-white px-2 py-1 rounded text-xs font-bold">
                     OFF
                   </span>
                 </div>
 
                 {/* Action Button */}
                 {scarf.status === 'Sold Out' ? (
-                  <button className="w-full bg-gray-400 text-white py-3 px-4 rounded-lg cursor-not-allowed font-medium" disabled>
+                  <button className="w-full bg-stone-400 text-white py-3 px-4 rounded-lg cursor-not-allowed font-medium" disabled>
                     SOLD OUT
                   </button>
                 ) : scarf.isCustomizable ? (
-                  <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 px-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 font-medium">
+                  <button className="w-full bg-gradient-to-r from-peacock-600 to-peacock-600 text-white py-3 px-4 rounded-lg hover:from-peacock-700 hover:to-peacock-700 transition-all duration-300 font-medium">
                     CUSTOMIZE
                   </button>
                 ) : (
                   <button 
-                    className="w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors font-medium"
+                    className="w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-stone-800 transition-colors font-medium"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
