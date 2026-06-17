@@ -15,11 +15,11 @@ import { productImage } from '@/lib/image-mapping'
 export default function CheckoutPage() {
   const { state, clearCart, getCartTotal, removeFromCart, updateQuantity } = useCart()
 
-  const handleQuantityChange = (itemId: number, newQuantity: number) => {
+  const handleQuantityChange = (itemId: number, newQuantity: number, designId?: number) => {
     if (newQuantity <= 0) {
-      removeFromCart(itemId)
+      removeFromCart(itemId, designId)
     } else {
-      updateQuantity(itemId, newQuantity)
+      updateQuantity(itemId, newQuantity, designId)
     }
   }
 
@@ -98,7 +98,7 @@ export default function CheckoutPage() {
                 
                 <div className="space-y-6">
                   {state.items.map((item) => (
-                    <div key={item.id} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl">
+                    <div key={`${item.id}-${item.selectedDesign?.id ?? 'standard'}`} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl">
                       <div className="relative">
                         <img 
                           src={productImage(item.image)} 
@@ -116,20 +116,20 @@ export default function CheckoutPage() {
                       </div>
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                          onClick={() => handleQuantityChange(item.id, item.quantity - 1, item.selectedDesign?.id)}
                           className="w-8 h-8 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
                         >
                           <MinusIcon className="h-4 w-4" />
                         </button>
                         <span className="w-8 text-center font-medium">{item.quantity}</span>
                         <button
-                          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                          onClick={() => handleQuantityChange(item.id, item.quantity + 1, item.selectedDesign?.id)}
                           className="w-8 h-8 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
                         >
                           <PlusIcon className="h-4 w-4" />
                         </button>
                         <button
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item.id, item.selectedDesign?.id)}
                           className="w-8 h-8 bg-red-100 text-red-600 rounded-full flex items-center justify-center hover:bg-red-200 transition-colors ml-2"
                         >
                           <TrashIcon className="h-4 w-4" />
