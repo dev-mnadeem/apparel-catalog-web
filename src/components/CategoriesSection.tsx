@@ -1,400 +1,155 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { useEffect, useState } from 'react'
+import { ChevronLeftIcon, ChevronRightIcon, PauseIcon, PlayIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
-import { getProductImageUrl, productImage } from '@/lib/image-mapping'
+import { findProduct, sections, type CatalogueProduct } from '@/lib/catalogue'
+import { getHeroImageUrl, productImage } from '@/lib/image-mapping'
+
+const bannerSlides = [
+  { title: 'Silk scarves', subtitle: 'The new collection', cta: 'Shop silk scarves', href: '/categories/women/silk-scarves', image: '/images/products/Untitled design (2).png' },
+  { title: 'Unstitched & stitched', subtitle: 'Festive collection', cta: 'Shop women', href: '/categories/women', image: '/images/products/Summer ENd (3).png' },
+  { title: 'Pocket squares', subtitle: 'Folded for the breast pocket', cta: 'Shop pocket squares', href: '/categories/men/pocket-square', image: '/images/products/c.png' },
+  { title: 'Summer end', subtitle: 'Sale', cta: 'See the sale', href: '/sale', image: '/images/products/Summer ENd (4).png' },
+]
+
+const categories = [
+  { name: 'Silk scarves', description: 'Printed silk for every season', href: '/categories/women/silk-scarves', image: '/images/products/0f5ae0af-d3f9-40b6-b51c-f5b0e1c338e3 2.png' },
+  { name: '2 piece sets', description: 'Coordinated outfits', href: '/categories/women/2-piece', image: '/images/products/WhatsApp Image 2025-06-03 at 6.27.46 PM (1).png' },
+  { name: 'Pocket squares', description: 'For suits and sherwanis', href: '/categories/men/pocket-square', image: '/images/products/6f8a7fa7-5640-4d9e-98ca-b6fff2bbf32d.png' },
+  { name: 'Men’s scarves', description: 'Long silk scarves', href: '/categories/men/silk-scarf', image: '/images/products/1c836977-a43b-4368-b801-b9cdc7b4c2d1.png' },
+  { name: 'Winter scarves', description: 'Knits and fleece', href: '/categories/women/winter-scarves', image: '/images/products/2e549476-4ea2-4556-b22c-5a6db764e717.png' },
+]
+
+const FEATURED_IDS = [122, 55, 57, 60]
+
+function FeaturedCard({ product }: { product: CatalogueProduct }) {
+  const { addToCart } = useCart()
+  const section = sections[product.section]
+  return (
+    <li className="flex flex-col">
+      <Link href={`/product/${product.id}`} className="group block">
+        <div className="overflow-hidden rounded-lg bg-madder-100">
+          <img
+            src={productImage(product.images[0] ?? '', 500)}
+            alt=""
+            className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        </div>
+        <p className="mt-3 text-xs uppercase tracking-[0.15em] text-stone-500">{section.label}</p>
+        <h3 className="mt-1 font-sans text-base font-medium capitalize text-black">{product.name.toLowerCase()}</h3>
+      </Link>
+      <p className="mt-1 text-sm">
+        <span className="font-semibold">{product.price}</span>
+        {product.originalPrice && <span className="ml-2 text-stone-500 line-through">{product.originalPrice}</span>}
+      </p>
+      <button
+        type="button"
+        onClick={() =>
+          addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            originalPrice: product.originalPrice,
+            image: product.images[0] ?? '',
+            category: `${section.department} - ${section.label}`,
+          })
+        }
+        className="btn-outline mt-3 py-2 text-sm"
+      >
+        Add to bag
+      </button>
+    </li>
+  )
+}
 
 export default function CategoriesSection() {
-  const { addToCart } = useCart()
   const [bannerIndex, setBannerIndex] = useState(0)
-
-  const bannerSlides = [
-    {
-      id: 1,
-      title: 'SILK SCARF',
-      subtitle: 'COLLECTION',
-      buttonText: 'SHOP NOW',
-      image: '/images/products/Untitled design (2).png'
-    },
-    {
-      id: 2,
-      title: 'UNSTITCHED & STITCHED',
-      subtitle: 'FESTIVE COLLECTION',
-      buttonText: 'SHOP NOW',
-      image: '/images/products/Summer ENd (3).png'
-    },
-    {
-      id: 3,
-      title: 'POCKET SQUARE & SCARF',
-      subtitle: 'ELEGANT STYLE',
-      buttonText: 'SHOP NOW',
-      image: '/images/products/c.png'
-    },
-    {
-      id: 4,
-      title: 'SUMMER END',
-      subtitle: 'SALE',
-      buttonText: 'EXPLORE NOW',
-      image: '/images/products/Summer ENd (4).png'
-    }
-  ]
-
-  const categories = [
-    { id: '1', name: 'Silk Scarves', image: getProductImageUrl('/images/products/0f5ae0af-d3f9-40b6-b51c-f5b0e1c338e3 2.png'), slug: 'silk-scarves', description: 'Elegant silk scarf collection', href: '/categories/women/silk-scarves' },
-    { id: '2', name: '2 Piece Sets', image: getProductImageUrl('/images/products/WhatsApp Image 2025-06-03 at 6.27.46 PM (1).png'), slug: '2-piece-sets', description: 'Coordinated 2 piece outfits', href: '/categories/women/2-piece' },
-    { id: '3', name: 'Pocket Squares', image: getProductImageUrl('/images/products/6f8a7fa7-5640-4d9e-98ca-b6fff2bbf32d.png'), slug: 'pocket-squares', description: 'Sophisticated pocket square collection', href: '/categories/men/pocket-square' },
-    { id: '4', name: 'Men Scarves', image: getProductImageUrl('/images/products/1c836977-a43b-4368-b801-b9cdc7b4c2d1.png'), slug: 'men-scarves', description: 'Men\'s scarf collection', href: '/categories/men/silk-scarf' },
-    { id: '5', name: 'Winter Scarves', image: getProductImageUrl('/images/products/2e549476-4ea2-4556-b22c-5a6db764e717.png'), slug: 'winter-scarves', description: 'Warm winter scarf collection', href: '/categories/women/winter-scarves' }
-  ]
-
-  const nextBanner = () => {
-    setBannerIndex((prev) => (prev + 1) % bannerSlides.length)
-  }
-
-  const prevBanner = () => {
-    setBannerIndex((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length)
-  }
-
-  const goToBanner = (index: number) => {
-    setBannerIndex(index)
-  }
+  const [paused, setPaused] = useState(false)
+  const slide = bannerSlides[bannerIndex]
+  const featured = FEATURED_IDS.map((id) => findProduct(id)).filter((product): product is CatalogueProduct => Boolean(product))
 
   useEffect(() => {
-    const interval = setInterval(() => setBannerIndex(prev => (prev + 1) % bannerSlides.length), 5000)
+    if (paused) return
+    const interval = setInterval(() => setBannerIndex((prev) => (prev + 1) % bannerSlides.length), 6000)
     return () => clearInterval(interval)
-  }, [bannerSlides.length])
+  }, [paused])
+
+  const step = (delta: number) => setBannerIndex((prev) => (prev + delta + bannerSlides.length) % bannerSlides.length)
 
   return (
-    <section className="pt-16 py-12 bg-beige">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Promotional Banner Carousel */}
-        <div className="mb-8">
-          <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-            {/* Banner Slide */}
-            <div className="relative h-[500px] md:h-[600px] transition-all duration-500 ease-in-out overflow-hidden">
-              {/* Background Image */}
-              <img
-                src={getProductImageUrl(bannerSlides[bannerIndex].image, 1200, 600)}
-                alt={bannerSlides[bannerIndex].title}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              
-              {/* Content Overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent flex ${
-                bannerSlides[bannerIndex].title === 'SILK SCARF' ? 'justify-start items-end' :
-                bannerSlides[bannerIndex].title === 'UNSTITCHED & STITCHED' ? 'justify-end items-end' : 
-                bannerSlides[bannerIndex].title === 'POCKET SQUARE & SCARF' ? 'justify-start items-end' :
-                bannerSlides[bannerIndex].title === 'SUMMER END' ? 'justify-start items-end' : 'items-center'
-              }`}>
-                <div className={`text-white px-8 md:px-12 lg:px-16 max-w-2xl ${
-                  bannerSlides[bannerIndex].title === 'SILK SCARF' ? 'text-left pb-16 pl-16' :
-                  bannerSlides[bannerIndex].title === 'UNSTITCHED & STITCHED' ? 'text-right pb-16 pr-16' : 
-                  bannerSlides[bannerIndex].title === 'POCKET SQUARE & SCARF' ? 'text-left pb-16 pl-16' :
-                  bannerSlides[bannerIndex].title === 'SUMMER END' ? 'text-left pb-16 pl-16' : ''
-                }`}>
-                  <h2 className="text-2xl md:text-4xl lg:text-5xl font-black mb-4 tracking-wider">
-                    {bannerSlides[bannerIndex].title}
-          </h2>
-                  <p className="text-lg md:text-xl lg:text-2xl font-bold mb-6 tracking-wide">
-                    {bannerSlides[bannerIndex].subtitle}
-                  </p>
-                  <button 
-                    className="bg-white text-black px-6 py-3 rounded-lg font-bold text-base hover:bg-gray-100 transition-colors cursor-pointer"
-                    onClick={() => {
-                      if (bannerSlides[bannerIndex].title === 'SILK SCARF') {
-                        window.open('/categories/women/silk-scarves', '_blank');
-                      } else if (bannerSlides[bannerIndex].title === 'UNSTITCHED & STITCHED') {
-                        window.open('/categories/women', '_blank');
-                      } else if (bannerSlides[bannerIndex].title === 'POCKET SQUARE & SCARF') {
-                        window.open('/categories/men/pocket-square', '_blank');
-                      } else if (bannerSlides[bannerIndex].title === 'SUMMER END') {
-                        window.open('/sale', '_blank');
-                      }
-                    }}
-                  >
-                    {bannerSlides[bannerIndex].buttonText}
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            {/* Navigation Arrows */}
-            <button
-              onClick={prevBanner}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 z-10"
-            >
-              <ChevronLeftIcon className="h-6 w-6" />
-            </button>
-            <button
-              onClick={nextBanner}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-colors duration-300 z-10"
-            >
-              <ChevronRightIcon className="h-6 w-6" />
-            </button>
-            
-            {/* Banner Indicators */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
-              {bannerSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToBanner(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === bannerIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <h1 className="sr-only">Trendy Folds: silk scarves, pocket squares and seasonal pieces</h1>
+      <section aria-roledescription="carousel" aria-label="Collections" className="relative overflow-hidden rounded-xl bg-black">
+        <img
+          src={getHeroImageUrl(slide.image, 1400, 700)}
+          alt=""
+          className="h-[420px] w-full object-cover opacity-80 sm:h-[520px]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div aria-live={paused ? 'polite' : 'off'} className="absolute inset-x-0 bottom-0 p-6 pb-16 sm:p-12 sm:pb-16">
+          <p className="text-xs font-medium uppercase tracking-[0.25em] text-saffron-200">{slide.subtitle}</p>
+          <p className="mt-2 font-display text-5xl font-semibold leading-none text-white sm:text-7xl">{slide.title}</p>
+          <Link href={slide.href} className="mt-6 inline-flex rounded-md bg-paper px-5 py-3 font-medium text-black hover:bg-white">
+            {slide.cta}
+          </Link>
         </div>
+        <div className="absolute bottom-4 right-4 flex items-center gap-2 sm:bottom-6 sm:right-6">
+          <button type="button" onClick={() => setPaused((p) => !p)} aria-label={paused ? 'Play slideshow' : 'Pause slideshow'} className="rounded-full bg-white/15 p-2 text-white hover:bg-white/30">
+            {paused ? <PlayIcon className="h-5 w-5" /> : <PauseIcon className="h-5 w-5" />}
+          </button>
+          <button type="button" onClick={() => step(-1)} aria-label="Previous slide" className="rounded-full bg-white/15 p-2 text-white hover:bg-white/30">
+            <ChevronLeftIcon className="h-5 w-5" />
+          </button>
+          <button type="button" onClick={() => step(1)} aria-label="Next slide" className="rounded-full bg-white/15 p-2 text-white hover:bg-white/30">
+            <ChevronRightIcon className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="absolute bottom-6 left-6 flex gap-2 sm:left-12">
+          {bannerSlides.map((item, index) => (
+            <button
+              key={item.title}
+              type="button"
+              onClick={() => setBannerIndex(index)}
+              aria-label={`Show ${item.title}`}
+              aria-current={index === bannerIndex}
+              className={`h-1.5 rounded-full transition-all ${index === bannerIndex ? 'w-8 bg-white' : 'w-4 bg-white/50 hover:bg-white/80'}`}
+            />
+          ))}
+        </div>
+      </section>
 
-        {/* Categories Grid */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-black mb-8 text-center font-poppins">Shop by Category</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <section aria-labelledby="categories-heading" className="mt-16">
+        <h2 id="categories-heading" className="text-4xl">Shop by category</h2>
+        <ul className="mt-6 flex snap-x gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible lg:grid-cols-5">
           {categories.map((category) => (
-            <Link
-              key={category.id}
-                href={category.href}
-                className="group cursor-pointer"
-              >
-                <div className="relative mb-4">
-                  <img 
-                    src={productImage(category.image)}
-                    alt={category.name}
-                    className="w-full h-64 object-cover object-top rounded-lg group-hover:scale-105 transition-transform duration-300"
+            <li key={category.href} className="w-40 flex-none snap-start sm:w-auto">
+              <Link href={category.href} className="group block">
+                <div className="overflow-hidden rounded-lg">
+                  <img
+                    src={productImage(category.image, 400)}
+                    alt=""
+                    className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                   />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300 rounded-lg"></div>
                 </div>
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold text-black mb-2">{category.name}</h3>
-                  <p className="text-sm text-gray-600 mb-3">{category.description}</p>
-                  <div className="w-16 h-1 bg-black mx-auto group-hover:w-20 transition-all duration-300"></div>
-                </div>
+                <h3 className="mt-3 font-sans text-base font-medium text-black group-hover:underline">{category.name}</h3>
+                <p className="text-sm text-stone-600">{category.description}</p>
               </Link>
-            ))}
-          </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="featured-heading" className="mt-16">
+        <div className="flex items-end justify-between gap-4">
+          <h2 id="featured-heading" className="text-4xl">Featured silk</h2>
+          <Link href="/categories/women/silk-scarves" className="text-sm font-medium underline underline-offset-4">View all</Link>
         </div>
-
-        {/* Featured Products */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-black mb-10 text-center font-poppins">Featured Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {/* Product 1 - PISTACHIO */}
-            <Link href="/product/122" className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-              <div className="relative">
-                <img 
-                  src={getProductImageUrl("/images/products/18215009-b781-47d5-87fe-b22bdf39d1bf.png")} 
-                  alt="Pistachio Silk Scarf"
-                  className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-gray-800 shadow-sm">
-                  Pistachio Silk Scarf
-                </div>
-                <button className="absolute top-3 right-3 p-2.5 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all duration-200 opacity-0 group-hover:opacity-100">
-                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-black mb-2">PISTACHIO</h3>
-                <p className="text-sm text-gray-600 mb-3">Silk Scarf Collection</p>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xl font-bold text-black">Rs.1,399</span>
-                    <span className="text-sm text-gray-500 line-through">Rs.2,200</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <span className="text-yellow-400">★★★★</span>
-                    <span className="text-sm text-gray-600">(4.8)</span>
-                  </div>
-                </div>
-                <button 
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    addToCart({
-                      id: 122,
-                      name: 'PISTACHIO',
-                      price: 'Rs.1,399',
-                      image: getProductImageUrl('/images/products/0f5ae0af-d3f9-40b6-b51c-f5b0e1c338e3 2.png'),
-                      category: 'Silk Scarf'
-                    })
-                  }}
-                  className="w-full bg-black text-white py-3 px-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200"
-                >
-                  ADD TO BAG
-                </button>
-              </div>
-            </Link>
-
-            {/* Product 2 - 4 BLOCKS */}
-            <Link href="/product/55" className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-              <div className="relative">
-                <img 
-                  src={getProductImageUrl("/images/products/IMG_4332.png")} 
-                  alt="4 Blocks Silk Scarf"
-                  className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-gray-800 shadow-sm">
-                  4 Blocks Silk Scarf
-                </div>
-                <button className="absolute top-3 right-3 p-2.5 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all duration-200 opacity-0 group-hover:opacity-100">
-                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-black mb-2">4 BLOCKS</h3>
-                <p className="text-sm text-gray-600 mb-3">Silk Scarf Collection</p>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xl font-bold text-black">Rs.1,399</span>
-                    <span className="text-sm text-gray-500 line-through">Rs.2,200</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <span className="text-yellow-400">★★★★</span>
-                    <span className="text-sm text-gray-600">(4.7)</span>
-                  </div>
-                </div>
-                <button 
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    addToCart({
-                      id: 55,
-                      name: '4 BLOCKS',
-                      price: 'Rs.1,399',
-                      image: getProductImageUrl('/images/products/IMG_4332.png'),
-                      category: 'Silk Scarf'
-                    })
-                  }}
-                  className="w-full bg-black text-white py-3 px-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200"
-                >
-                  ADD TO BAG
-                </button>
-              </div>
-            </Link>
-
-            {/* Product 3 - PINK BLOCK */}
-            <Link href="/product/57" className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-              <div className="relative">
-                <img 
-                  src={getProductImageUrl("/images/products/8b56937b-3d2b-4f97-a61b-aa555f574aff.png")} 
-                  alt="Pink Block Silk Scarf"
-                  className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-gray-800 shadow-sm">
-                  Pink Block Silk Scarf
-                </div>
-                <button className="absolute top-3 right-3 p-2.5 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all duration-200 opacity-0 group-hover:opacity-100">
-                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-black mb-2">PINK BLOCK</h3>
-                <p className="text-sm text-gray-600 mb-3">Silk Scarf Collection</p>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xl font-bold text-black">Rs.1,399</span>
-                    <span className="text-sm text-gray-500 line-through">Rs.2,200</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <span className="text-yellow-400">★★★★</span>
-                    <span className="text-sm text-gray-600">(4.9)</span>
-                  </div>
-                </div>
-                <button 
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    addToCart({
-                      id: 57,
-                      name: 'PINK BLOCK',
-                      price: 'Rs.1,399',
-                      image: getProductImageUrl('/images/products/8b56937b-3d2b-4f97-a61b-aa555f574aff.png'),
-                      category: 'Silk Scarf'
-                    })
-                  }}
-                  className="w-full bg-black text-white py-3 px-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200"
-                >
-                  ADD TO BAG
-                </button>
-              </div>
-            </Link>
-
-            {/* Product 4 - BLACK CHAIR */}
-            <Link href="/product/60" className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-              <div className="relative">
-                <img 
-                  src={getProductImageUrl("/images/products/WhatsApp Image 2025-08-01 at 1.04.04 AM.png")} 
-                  alt="Black Chair Silk Scarf"
-                  className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-gray-800 shadow-sm">
-                  Black Chair Silk Scarf
-                </div>
-                <button className="absolute top-3 right-3 p-2.5 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all duration-200 opacity-0 group-hover:opacity-100">
-                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                </button>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-black mb-2">BLACK CHAIR</h3>
-                <p className="text-sm text-gray-600 mb-3">Silk Scarf Collection</p>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xl font-bold text-black">Rs.1,399</span>
-                    <span className="text-sm text-gray-500 line-through">Rs.2,200</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <span className="text-yellow-400">★★★★</span>
-                    <span className="text-sm text-gray-600">(4.6)</span>
-                  </div>
-                </div>
-                <button 
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    addToCart({
-                      id: 60,
-                      name: 'BLACK CHAIR',
-                      price: 'Rs.1,399',
-                      image: getProductImageUrl('/images/products/WhatsApp Image 2025-08-01 at 1.04.04 AM.png'),
-                      category: 'Silk Scarf'
-                    })
-                  }}
-                  className="w-full bg-black text-white py-3 px-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200"
-                >
-                  ADD TO BAG
-                </button>
-              </div>
-            </Link>
-          </div>
-        </div>
-
-        {/* Custom scrollbar hiding */}
-        <style jsx>{`
-          .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-          }
-          .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-          }
-        `}</style>
-      </div>
-      
-      {/* No gap - sections directly connected */}
-      
-      {/* Negative margin to pull Discover section up by 100px */}
-      <div className="-mb-24"></div>
-    </section>
+        <ul className="mt-6 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+          {featured.map((product) => <FeaturedCard key={product.id} product={product} />)}
+        </ul>
+      </section>
+    </div>
   )
 }
