@@ -443,7 +443,7 @@ export default function TrendingPage() {
           </Link>
 
           {/* Men's Silk Scarf - Trending */}
-          <Link href="/product/25" className="block">
+          <Link href="/product/104" className="block">
             <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group border border-gray-100 cursor-pointer">
               <div className="relative overflow-hidden">
                 <img 
@@ -507,7 +507,7 @@ export default function TrendingPage() {
                     e.preventDefault()
                     e.stopPropagation()
                     addToCart({
-                      id: 25,
+                      id: 104,
                       name: 'WILD SCARF',
                       price: 'Rs.1,800',
                       image: '/images/products/9dc9df6d-201f-452d-8036-3b0bc149f800.png',
@@ -603,7 +603,7 @@ export default function TrendingPage() {
           </Link>
 
           {/* Women's Silk Scarf - Trending */}
-          <Link href="/product/56" className="block">
+          <Link href="/product/57" className="block">
             <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group border border-gray-100 cursor-pointer">
               <div className="relative overflow-hidden">
                 <img 
@@ -667,7 +667,7 @@ export default function TrendingPage() {
                     e.preventDefault()
                     e.stopPropagation()
                     addToCart({
-                      id: 56,
+                      id: 57,
                       name: 'PINK BLOCK SILK SCARF',
                       price: 'Rs.1,499',
                       image: '/images/products/8b56937b-3d2b-4f97-a61b-aa555f574aff.png',

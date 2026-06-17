@@ -100,7 +100,7 @@ export default function SalePage() {
       discount: '55% OFF'
     },
     {
-      id: 48,
+      id: 47,
       name: 'BEIGE STAR',
       price: 'Rs.999',
       originalPrice: 'Rs.2,200',

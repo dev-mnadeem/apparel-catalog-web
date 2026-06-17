@@ -7,7 +7,7 @@ export default function AllCategoriesPage() {
   const allProducts = [
     // Women's Unstiched Collection
     {
-      id: 1,
+      id: 112,
       name: 'EMBROIDERED LAWN VISCOSE SUIT',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -18,7 +18,7 @@ export default function AllCategoriesPage() {
       category: 'Women - Unstiched'
     },
     {
-      id: 2,
+      id: 113,
       name: 'EMBROIDERED LAWN VISCOSE SHIRT',
       price: 'Rs.1,299',
       originalPrice: 'Rs.1,800',
@@ -29,7 +29,7 @@ export default function AllCategoriesPage() {
       category: 'Women - Unstiched'
     },
     {
-      id: 3,
+      id: 114,
       name: 'DESIGNER LAWN COLLECTION',
       price: 'Rs.1,199',
       originalPrice: 'Rs.1,600',
@@ -42,7 +42,7 @@ export default function AllCategoriesPage() {
 
     // Women's 2-Piece Collection
     {
-      id: 4,
+      id: 115,
       name: 'EMBROIDERED LAWN 2-PIECE SUIT',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -53,7 +53,7 @@ export default function AllCategoriesPage() {
       category: 'Women - 2-Piece'
     },
     {
-      id: 5,
+      id: 116,
       name: 'DESIGNER 2-PIECE COLLECTION',
       price: 'Rs.1,299',
       originalPrice: 'Rs.1,800',
@@ -77,7 +77,7 @@ export default function AllCategoriesPage() {
 
     // Women's Silk Scarves
     {
-      id: 7,
+      id: 117,
       name: 'PISTACHU SILK SCARF',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -99,7 +99,7 @@ export default function AllCategoriesPage() {
       category: 'Women - Silk Scarves'
     },
     {
-      id: 9,
+      id: 118,
       name: 'OCEAN BREEZE SILK SCARF',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -112,7 +112,7 @@ export default function AllCategoriesPage() {
 
     // Women's Winter Scarves
     {
-      id: 10,
+      id: 109,
       name: 'WARM WINTER SCARF',
       price: 'Rs.1,299',
       originalPrice: 'Rs.1,800',
@@ -123,7 +123,7 @@ export default function AllCategoriesPage() {
       category: 'Women - Winter Scarves'
     },
     {
-      id: 11,
+      id: 110,
       name: 'KNITTED WINTER SCARF',
       price: 'Rs.1,199',
       originalPrice: 'Rs.1,600',
@@ -134,7 +134,7 @@ export default function AllCategoriesPage() {
       category: 'Women - Winter Scarves'
     },
     {
-      id: 12,
+      id: 111,
       name: 'FLEECE WINTER SCARF',
       price: 'Rs.999',
       originalPrice: 'Rs.1,400',
@@ -147,7 +147,7 @@ export default function AllCategoriesPage() {
 
     // Men's Pocket Squares
     {
-      id: 13,
+      id: 101,
       name: 'POLKA BLACK POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -158,7 +158,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 14,
+      id: 102,
       name: 'ROYAL BLACK POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -169,7 +169,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 15,
+      id: 103,
       name: 'BURGUNDY ELEGANCE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -180,7 +180,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 16,
+      id: 2,
       name: 'COW PRINT ELEGANCE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -191,7 +191,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 17,
+      id: 3,
       name: 'BLACK ROYAL POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -202,7 +202,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 18,
+      id: 4,
       name: 'BLACK POLKA POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -213,7 +213,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 19,
+      id: 7,
       name: 'VINTAGE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -224,7 +224,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 26,
+      id: 12,
       name: 'ROYAL GEOMETRIC POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -246,7 +246,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 21,
+      id: 9,
       name: 'HARMONY POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -257,7 +257,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 22,
+      id: 10,
       name: 'PAISLEY SQUARE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -268,7 +268,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 23,
+      id: 11,
       name: 'BLUE CHAIN POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -279,7 +279,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Pocket Square'
     },
     {
-      id: 24,
+      id: 100,
       name: 'FLORAL ELEGANCE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -314,7 +314,7 @@ export default function AllCategoriesPage() {
 
     // Men's Silk Scarves
     {
-      id: 16,
+      id: 119,
       name: 'CLASSIC NAVY SILK SCARF',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -325,7 +325,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Silk Scarf'
     },
     {
-      id: 17,
+      id: 120,
       name: 'BURGUNDY ELEGANCE SILK SCARF',
       price: 'Rs.1,299',
       originalPrice: 'Rs.1,800',
@@ -336,7 +336,7 @@ export default function AllCategoriesPage() {
       category: 'Men - Silk Scarf'
     },
     {
-      id: 18,
+      id: 121,
       name: 'SAGE GREEN SILK SCARF',
       price: 'Rs.1,199',
       originalPrice: 'Rs.1,600',

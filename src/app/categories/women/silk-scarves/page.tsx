@@ -129,7 +129,7 @@ export default function WomensSilkScarfPage() {
       isCustomizable: true
     },
     {
-      id: 63,
+      id: 31,
       name: 'CUSTOM SCARF',
       price: 'Rs.1,800',
       originalPrice: 'Rs.3,000',

@@ -7,7 +7,7 @@ import { getProductImageUrl } from '@/lib/image-mapping'
 export default function PocketSquarePage() {
   const pocketSquares = [
     {
-      id: 13,
+      id: 101,
       name: 'POLKA BLACK POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -19,7 +19,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 14,
+      id: 102,
       name: 'ROYAL BLACK POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -31,7 +31,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 15,
+      id: 103,
       name: 'BURGUNDY ELEGANCE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -43,7 +43,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 16,
+      id: 2,
       name: 'COW PRINT ELEGANCE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -55,7 +55,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 17,
+      id: 3,
       name: 'BLACK ROYAL POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -67,7 +67,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 18,
+      id: 4,
       name: 'BLACK POLKA POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -79,7 +79,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 19,
+      id: 7,
       name: 'VINTAGE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -91,7 +91,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 26,
+      id: 12,
       name: 'ROYAL GEOMETRIC POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -115,7 +115,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 21,
+      id: 9,
       name: 'HARMONY POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -127,7 +127,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 22,
+      id: 10,
       name: 'PAISLEY SQUARE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -139,7 +139,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 23,
+      id: 11,
       name: 'BLUE CHAIN POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -151,7 +151,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 24,
+      id: 100,
       name: 'FLORAL ELEGANCE POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',
@@ -175,7 +175,7 @@ export default function PocketSquarePage() {
       isCustomizable: true
     },
     {
-      id: 28,
+      id: 13,
       name: 'RUBY PEAK POCKET SQUARE',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,000',

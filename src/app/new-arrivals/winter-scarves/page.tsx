@@ -6,7 +6,7 @@ import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/
 export default function WinterScarvesPage() {
   const winterScarves = [
     {
-      id: 1,
+      id: 109,
       name: 'WARM WINTER SCARF',
       price: 'Rs.1,299',
       originalPrice: 'Rs.1,800',
@@ -16,7 +16,7 @@ export default function WinterScarvesPage() {
       description: 'Cozy winter scarf perfect for cold weather'
     },
     {
-      id: 2,
+      id: 110,
       name: 'KNITTED WINTER SCARF',
       price: 'Rs.1,199',
       originalPrice: 'Rs.1,600',
@@ -26,7 +26,7 @@ export default function WinterScarvesPage() {
       description: 'Soft knitted scarf with warm wool blend'
     },
     {
-      id: 3,
+      id: 111,
       name: 'FLEECE WINTER SCARF',
       price: 'Rs.999',
       originalPrice: 'Rs.1,400',

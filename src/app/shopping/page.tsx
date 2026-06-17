@@ -12,7 +12,7 @@ export default function ShoppingPage() {
   const featuredProducts = [
     // Women's Silk Scarves
     {
-      id: 52,
+      id: 122,
       name: 'PISTACHIO',
       price: 'Rs.1,399',
       image: '/images/products/0f5ae0af-d3f9-40b6-b51c-f5b0e1c338e3 2.png',
@@ -22,7 +22,7 @@ export default function ShoppingPage() {
       href: '/categories/women/silk-scarves'
     },
     {
-      id: 53,
+      id: 55,
       name: '4 BLOCKS',
       price: 'Rs.1,399',
       image: '/images/products/IMG_4331.png',
@@ -32,7 +32,7 @@ export default function ShoppingPage() {
       href: '/categories/women/silk-scarves'
     },
     {
-      id: 54,
+      id: 57,
       name: 'PINK BLOCK',
       price: 'Rs.1,399',
       image: '/images/products/8b56937b-3d2b-4f97-a61b-aa555f574aff.png',
@@ -54,7 +54,7 @@ export default function ShoppingPage() {
 
     // Men's Pocket Squares
     {
-      id: 1,
+      id: 21,
       name: 'DARK MOUNTAIN',
       price: 'Rs.1,199',
       image: '/images/products/IMG_7698.png',
@@ -64,7 +64,7 @@ export default function ShoppingPage() {
       href: '/categories/men/pocket-square'
     },
     {
-      id: 2,
+      id: 22,
       name: 'SKY BLUE HARMONY',
       price: 'Rs.1,199',
       image: '/images/products/IMG_7711.jpg',
@@ -74,7 +74,7 @@ export default function ShoppingPage() {
       href: '/categories/men/pocket-square'
     },
     {
-      id: 3,
+      id: 23,
       name: 'ROYAL ELEGANCE',
       price: 'Rs.1,199',
       image: '/images/products/IMG_5036.png',
@@ -84,7 +84,7 @@ export default function ShoppingPage() {
       href: '/categories/men/pocket-square'
     },
     {
-      id: 4,
+      id: 11,
       name: 'BLUE CHAIN',
       price: 'Rs.999',
       image: '/images/products/blue-chain-pocket-square.png',

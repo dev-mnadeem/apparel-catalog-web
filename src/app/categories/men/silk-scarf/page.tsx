@@ -20,7 +20,7 @@ export default function MensSilkScarfPage() {
       description: 'Exquisite rhinestone-embellished silk scarf with premium craftsmanship - featuring elegant stone details and luxurious texture perfect for sophisticated styling and special occasions'
     },
     {
-      id: 25,
+      id: 104,
       name: 'WILD SCARF',
       price: 'Rs.1,800',
       originalPrice: 'Rs.2,400',
@@ -44,7 +44,7 @@ export default function MensSilkScarfPage() {
       description: 'Sophisticated blue chain-pattern silk scarf with elegant links and premium texture - perfect for modern professional styling and luxury occasions'
     },
     {
-      id: 27,
+      id: 105,
       name: 'ROYAL BLACK SCARF',
       price: 'Rs.1,800',
       originalPrice: 'Rs.2,400',

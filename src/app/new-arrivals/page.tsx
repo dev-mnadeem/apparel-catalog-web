@@ -214,7 +214,7 @@ export default function NewArrivalsPage() {
       category: 'Women - Silk Scarf'
     },
     {
-      id: 56,
+      id: 57,
       name: 'PINK BLOCK',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,200',
@@ -225,7 +225,7 @@ export default function NewArrivalsPage() {
       category: 'Women - Silk Scarf'
     },
     {
-      id: 57,
+      id: 106,
       name: 'AUTUMN',
       price: 'Rs.1,399',
       originalPrice: 'Rs.2,200',
@@ -270,7 +270,7 @@ export default function NewArrivalsPage() {
       category: 'Men - Silk Scarf'
     },
     {
-      id: 25,
+      id: 104,
       name: 'WILD SCARF',
       price: 'Rs.1,800',
       originalPrice: 'Rs.2,400',
@@ -292,7 +292,7 @@ export default function NewArrivalsPage() {
       category: 'Men - Silk Scarf'
     },
     {
-      id: 27,
+      id: 105,
       name: 'ROYAL BLACK SCARF',
       price: 'Rs.1,800',
       originalPrice: 'Rs.2,400',

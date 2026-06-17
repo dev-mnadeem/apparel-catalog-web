@@ -203,7 +203,7 @@ export default function CategoriesSection() {
           <h2 className="text-3xl font-bold text-black mb-10 text-center font-poppins">Featured Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {/* Product 1 - PISTACHIO */}
-            <Link href="/product/52" className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
+            <Link href="/product/122" className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
               <div className="relative">
                 <img 
                   src={getProductImageUrl("/images/products/18215009-b781-47d5-87fe-b22bdf39d1bf.png")} 
@@ -237,7 +237,7 @@ export default function CategoriesSection() {
                     e.preventDefault()
                     e.stopPropagation()
                     addToCart({
-                      id: 52,
+                      id: 122,
                       name: 'PISTACHIO',
                       price: 'Rs.1,399',
                       image: getProductImageUrl('/images/products/0f5ae0af-d3f9-40b6-b51c-f5b0e1c338e3 2.png'),
@@ -301,7 +301,7 @@ export default function CategoriesSection() {
             </Link>
 
             {/* Product 3 - PINK BLOCK */}
-            <Link href="/product/56" className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
+            <Link href="/product/57" className="group cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
               <div className="relative">
                 <img 
                   src={getProductImageUrl("/images/products/8b56937b-3d2b-4f97-a61b-aa555f574aff.png")} 
@@ -335,7 +335,7 @@ export default function CategoriesSection() {
                     e.preventDefault()
                     e.stopPropagation()
                     addToCart({
-                      id: 56,
+                      id: 57,
                       name: 'PINK BLOCK',
                       price: 'Rs.1,399',
                       image: getProductImageUrl('/images/products/8b56937b-3d2b-4f97-a61b-aa555f574aff.png'),

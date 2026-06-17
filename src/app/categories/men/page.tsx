@@ -53,7 +53,7 @@ export default function MensCategoryPage() {
       category: 'Silk Scarf'
     },
     {
-      id: 25,
+      id: 104,
       name: 'WILD SCARF',
       price: 'Rs.1,800',
       originalPrice: 'Rs.2,400',

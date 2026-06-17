@@ -6,7 +6,7 @@ import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/
 export default function PocketSquaresPage() {
   const pocketSquares = [
     {
-      id: 1,
+      id: 107,
       name: 'CLASSIC NAVY Pocket Square',
       price: 'Rs.899',
       originalPrice: 'Rs.1,200',
@@ -16,7 +16,7 @@ export default function PocketSquaresPage() {
       description: 'Timeless navy pocket square with subtle geometric patterns'
     },
     {
-      id: 2,
+      id: 103,
       name: 'BURGUNDY ELEGANCE Pocket Square',
       price: 'Rs.999',
       originalPrice: 'Rs.1,400',
@@ -26,7 +26,7 @@ export default function PocketSquaresPage() {
       description: 'Rich burgundy pocket square with sophisticated floral design'
     },
     {
-      id: 3,
+      id: 108,
       name: 'SAGE GREEN Pocket Square',
       price: 'Rs.799',
       originalPrice: 'Rs.1,100',
