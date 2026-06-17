@@ -1,13 +1,17 @@
-# Credentials are server-only by design; see .env.example. Nothing here is
-# required to browse the store.
+# Nothing here is required to browse the store; see .env.example.
 services:
   web:
-    build: { context: ., dockerfile: Dockerfile }
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:-}
+        NEXT_PUBLIC_SHOW_SIMULATED_ACTIVITY: ${NEXT_PUBLIC_SHOW_SIMULATED_ACTIVITY:-false}
     image: trendy-folds:local
-    container_name: trendy_folds
     environment:
+      NOTIFICATION_SERVICE_TOKEN: ${NOTIFICATION_SERVICE_TOKEN:-}
       EMAIL_API_KEY: ${EMAIL_API_KEY:-}
       EMAIL_SERVICE_URL: ${EMAIL_SERVICE_URL:-}
       WHATSAPP_ACCESS_TOKEN: ${WHATSAPP_ACCESS_TOKEN:-}
       WHATSAPP_PHONE_NUMBER_ID: ${WHATSAPP_PHONE_NUMBER_ID:-}
+      WHATSAPP_API_URL: ${WHATSAPP_API_URL:-https://graph.facebook.com/v18.0}
     ports: ["3800:3000"]
