@@ -6,13 +6,9 @@ import { usePathname, useRouter } from 'next/navigation'
 import { 
   MagnifyingGlassIcon, 
   ShoppingBagIcon, 
-  HeartIcon, 
   PhoneIcon,
   StarIcon,
   XMarkIcon,
-  GiftIcon,
-  BoltIcon,
-  Bars3Icon
 } from '@heroicons/react/24/outline'
 
 // Custom Truck Icon Component
@@ -113,17 +109,6 @@ const Navigation = () => {
     },
     { name: 'TRENDING', href: '/trending' },
     { name: 'SPECIAL DISCOUNT OFFERS', href: '/sale', highlight: true },
-  ]
-
-  const trendingSearches = [
-    'Trendy Dresses',
-    'Casual Wear',
-    'Formal Shirts',
-    'Designer Bags',
-    'Winter Collection',
-    'Summer Sale',
-    'Athleisure',
-    'Evening Gowns'
   ]
 
   return (
@@ -494,7 +479,7 @@ const Navigation = () => {
             
             {/* Mobile Navigation */}
             <nav className="space-y-2" role="navigation" aria-label="Mobile navigation">
-              {navigation.map((item, index) => (
+              {navigation.map((item) => (
                 <div key={item.name} className="space-y-1">
                   <Link
                     href={item.href}

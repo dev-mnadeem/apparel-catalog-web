@@ -12,6 +12,16 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
+    // Product photos come from Cloudinary (already resized by URL) or local
+    // SVG swatches, so next/image would add a loader without saving bytes.
+    rules: { "@next/next/no-img-element": "off" },
+  },
+  {
+    files: ["scripts/**/*.js"],
+    languageOptions: { sourceType: "commonjs" },
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
+  {
     ignores: [
       "node_modules/**",
       ".next/**",

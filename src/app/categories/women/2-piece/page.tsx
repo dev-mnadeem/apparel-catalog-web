@@ -37,7 +37,7 @@ export default function TwoPiecePage() {
             </div>
           </div>
           <h1 className="text-5xl font-bold text-gray-900 mb-6 font-poppins">
-            Women's 2-Piece Collection
+            Women&apos;s 2-Piece Collection
           </h1>
           <div className="inline-flex items-center bg-pink-100 text-pink-800 px-6 py-3 rounded-full mb-8">
             <ClockIcon className="h-5 w-5 mr-2" />
@@ -153,7 +153,7 @@ export default function TwoPiecePage() {
               href="/categories/women"
               className="bg-gradient-to-r from-pink-600 to-rose-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-pink-700 hover:to-rose-700 transition-all duration-300 transform hover:scale-105"
             >
-              Explore Women's Collection
+              Explore Women&apos;s Collection
             </Link>
             <Link
               href="/new-arrivals"

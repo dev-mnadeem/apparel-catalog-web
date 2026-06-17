@@ -12,7 +12,7 @@ export default function UnstichedPage() {
             <div className="text-6xl mb-6">🧵</div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Coming Soon</h2>
             <p className="text-lg text-gray-600 mb-8">
-              We're crafting a beautiful collection of unstitched fabrics and materials. 
+              We&apos;re crafting a beautiful collection of unstitched fabrics and materials. 
               Get ready to create your own unique designs with our premium quality fabrics.
             </p>
             <div className="bg-gradient-to-r from-blue-100 to-green-100 rounded-lg p-6">

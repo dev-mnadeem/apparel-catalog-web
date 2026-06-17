@@ -148,7 +148,7 @@ export default function ShippingPage() {
               <h3 className="text-lg font-semibold text-black mb-3">Important Notes</h3>
               <ul className="list-disc list-inside text-gray-600 space-y-2">
                 <li>Please have exact change ready for the delivery person</li>
-                <li>You can refuse delivery if items don't meet your expectations</li>
+                <li>You can refuse delivery if items don&apos;t meet your expectations</li>
                 <li>CoD orders may take 1-2 additional days for processing</li>
                 <li>Not available for international orders</li>
               </ul>

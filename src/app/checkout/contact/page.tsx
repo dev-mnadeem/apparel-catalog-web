@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { notificationService, type OrderDetails } from '@/lib/notifications'
 import {
@@ -11,8 +11,7 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
   ArrowLeftIcon,
-  ShieldCheckIcon,
-  TruckIcon
+  ShieldCheckIcon
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 
@@ -43,7 +42,6 @@ export default function ContactPage() {
   const [orderSuccess, setOrderSuccess] = useState(false)
   const [orderId, setOrderId] = useState('')
   const [error, setError] = useState('')
-  const [whatsappFailed, setWhatsappFailed] = useState(false)
   const [orderTotal, setOrderTotal] = useState('')
   const [delivery, setDelivery] = useState({ whatsappSent: false, emailSent: false })
 
@@ -97,7 +95,6 @@ export default function ContactPage() {
         return
       }
       setOrderSuccess(true)
-      setWhatsappFailed(!result.whatsappSent)
       clearCart()
 
     } catch (err) {
@@ -107,10 +104,6 @@ export default function ContactPage() {
       setIsSubmitting(false)
     }
   }
-
-
-
-
 
   if (state.items.length === 0 && !orderSuccess) {
     return (

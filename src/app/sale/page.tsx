@@ -173,38 +173,28 @@ export default function SalePage() {
     }
   ]
 
-  const handleAddToCart = async (item: any) => {
+  const handleAddToCart = (item: (typeof saleItems)[number]) => {
     setAddingToCart(item.id)
-    
-    try {
-      // Add to cart with default size and color
-      addToCart({
+    addToCart({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      category: item.category,
+      selectedDesign: {
         id: item.id,
         name: item.name,
-        price: item.price,
-        image: item.image,
-        category: item.category,
-        selectedDesign: {
-          id: item.id,
-          name: item.name,
-          image: item.image
-        }
-      })
-      
-      // Show success feedback
-      setSuccessProduct(item.name)
-      setShowSuccess(true)
-      
-      setTimeout(() => {
-        setAddingToCart(null)
-        setShowSuccess(false)
-      }, 2000)
-      
-    } catch (error) {
-      console.error('Error adding to cart:', error)
+        image: item.image
+      }
+    })
+    setSuccessProduct(item.name)
+    setShowSuccess(true)
+    setTimeout(() => {
       setAddingToCart(null)
-    }
+      setShowSuccess(false)
+    }, 2000)
   }
+
 
   return (
     <div className="min-h-screen bg-amber-50">

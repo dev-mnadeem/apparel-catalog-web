@@ -236,14 +236,14 @@ export default function ShoppingPage() {
                 className="inline-flex items-center px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-200"
               >
                 <ShoppingBagIcon className="w-5 h-5 mr-2" />
-                Shop Women's Scarves
+                Shop Women&apos;s Scarves
               </Link>
               <Link
                 href="/categories/men/pocket-square"
                 className="inline-flex items-center px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors duration-200"
               >
                 <ShoppingBagIcon className="w-5 h-5 mr-2" />
-                Shop Men's Pocket Squares
+                Shop Men&apos;s Pocket Squares
               </Link>
             </div>
           </div>

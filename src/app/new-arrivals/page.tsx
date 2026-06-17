@@ -331,38 +331,28 @@ export default function NewArrivalsPage() {
   // Filter out sold out products - only show available products
   const newArrivalProducts = allProducts.filter(product => !product.status || product.status !== 'Sold Out')
 
-  const handleAddToCart = async (product: any) => {
+  const handleAddToCart = (product: (typeof allProducts)[number]) => {
     setAddingToCart(product.id)
-    
-    try {
-      // Add to cart with default size and color
-      addToCart({
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: product.category,
+      selectedDesign: {
         id: product.id,
         name: product.name,
-        price: product.price,
-        image: product.image,
-        category: product.category,
-        selectedDesign: {
-          id: product.id,
-          name: product.name,
-          image: product.image
-        }
-      })
-      
-      // Show success feedback
-      setSuccessProduct(product.name)
-      setShowSuccess(true)
-      
-      setTimeout(() => {
-        setAddingToCart(null)
-        setShowSuccess(false)
-      }, 2000)
-      
-    } catch (error) {
-      console.error('Error adding to cart:', error)
+        image: product.image
+      }
+    })
+    setSuccessProduct(product.name)
+    setShowSuccess(true)
+    setTimeout(() => {
       setAddingToCart(null)
-    }
+      setShowSuccess(false)
+    }, 2000)
   }
+
 
   const categories = [
     { name: 'Silk Scarf Collection', href: '/categories/women/silk-scarves', count: 22 },

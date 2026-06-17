@@ -1,16 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
-import { getProductImageUrl, getHeroImageUrl, productImage } from '@/lib/image-mapping'
+import { getProductImageUrl, productImage } from '@/lib/image-mapping'
 
 export default function CategoriesSection() {
   const { addToCart } = useCart()
-  const [currentIndex, setCurrentIndex] = useState(0)
   const [bannerIndex, setBannerIndex] = useState(0)
-  const carouselRef = useRef<HTMLDivElement>(null)
 
   const bannerSlides = [
     {
@@ -51,14 +49,6 @@ export default function CategoriesSection() {
     { id: '5', name: 'Winter Scarves', image: getProductImageUrl('/images/products/2e549476-4ea2-4556-b22c-5a6db764e717.png'), slug: 'winter-scarves', description: 'Warm winter scarf collection', href: '/categories/women/winter-scarves' }
   ]
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % categories.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + categories.length) % categories.length)
-  }
-
   const nextBanner = () => {
     setBannerIndex((prev) => (prev + 1) % bannerSlides.length)
   }
@@ -72,20 +62,9 @@ export default function CategoriesSection() {
   }
 
   useEffect(() => {
-    const interval = setInterval(nextBanner, 5000)
+    const interval = setInterval(() => setBannerIndex(prev => (prev + 1) % bannerSlides.length), 5000)
     return () => clearInterval(interval)
   }, [bannerSlides.length])
-
-  const scrollToSlide = (index: number) => {
-    setCurrentIndex(index)
-    if (carouselRef.current) {
-      const slideWidth = carouselRef.current.scrollWidth / categories.length
-      carouselRef.current.scrollTo({
-        left: index * slideWidth,
-        behavior: 'smooth'
-      })
-    }
-  }
 
   return (
     <section className="pt-16 py-12 bg-beige">

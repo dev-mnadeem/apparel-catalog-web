@@ -692,13 +692,13 @@ export default function TrendingPage() {
               href="/categories/men"
               className="bg-black text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
             >
-              Men's Collection
+              Men&apos;s Collection
             </Link>
             <Link
               href="/categories/women"
               className="bg-amber-500 text-white px-8 py-4 rounded-xl hover:bg-amber-600 transition-all duration-300 font-semibold shadow-md hover:shadow-lg"
             >
-              Women's Collection
+              Women&apos;s Collection
             </Link>
             <Link
               href="/new-arrivals"
