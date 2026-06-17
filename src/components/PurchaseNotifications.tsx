@@ -12,72 +12,63 @@ interface ActivityNotification {
   avatar: string;
 }
 
-const PurchaseNotifications = () => {
-  // These notifications are invented, not real customer activity — a name is
-  // picked from a hardcoded list every few seconds. See src/lib/socialProof.ts.
-  // Off unless NEXT_PUBLIC_SHOW_SIMULATED_ACTIVITY=true.
-  if (!SHOW_SIMULATED_ACTIVITY) return null;
+const sampleCustomers = [
+  { name: 'Sarah A.', product: 'Pret Dress', avatar: '👩‍🦰' },
+  { name: 'Ayesha K.', product: 'Men Scarf', avatar: '👩‍🦱' },
+  { name: 'Hiba M.', product: 'Men Pocket Square', avatar: '👩‍🦳' },
+  { name: 'Saad R.', product: 'Women Silk Scarf', avatar: '👨‍🦱' },
+  { name: 'Usman A.', product: 'Pret Dress', avatar: '👨‍🦲' },
+  { name: 'Fatima S.', product: 'Men Scarf', avatar: '👩‍🦰' },
+  { name: 'Ahmed H.', product: 'Men Pocket Square', avatar: '👨‍🦱' },
+  { name: 'Zara N.', product: 'Women Silk Scarf', avatar: '👩‍🦳' },
+  { name: 'Hassan M.', product: 'Pret Dress', avatar: '👨‍🦰' },
+  { name: 'Amina F.', product: 'Men Scarf', avatar: '👩‍🦲' },
+  { name: 'Layla B.', product: 'Women Scarf', avatar: '👩‍🦰' },
+  { name: 'Noor K.', product: 'Women Pret', avatar: '👩‍🦱' },
+  { name: 'Mariam S.', product: 'Women Scarf', avatar: '👩‍🦳' },
+  { name: 'Yusuf M.', product: 'Women Pret', avatar: '👨‍🦱' },
+  { name: 'Aisha R.', product: 'Women Scarf', avatar: '👩‍🦲' },
+];
 
-  const [notifications, setNotifications] = useState<ActivityNotification[]>([]);
+const timeOptions = [
+  '1 min ago', '2 mins ago', '3 mins ago',
+  '45 secs ago', '30 secs ago', '1 min 30 secs ago',
+  '2 mins 15 secs ago', '1 min 45 secs ago', '50 secs ago'
+];
+
+function generateNotification(): ActivityNotification {
+  const customer = sampleCustomers[Math.floor(Math.random() * sampleCustomers.length)];
+  const timeAgo = timeOptions[Math.floor(Math.random() * timeOptions.length)];
+
+  return {
+    id: Date.now() + Math.random(),
+    customerName: customer.name,
+    productName: customer.product,
+    timeAgo,
+    avatar: customer.avatar,
+  };
+}
+
+// Invented activity, not real customers: a name is picked from the list above
+// every few seconds. See src/lib/socialProof.ts.
+const PurchaseNotifications = () =>
+  SHOW_SIMULATED_ACTIVITY ? <SimulatedActivityFeed /> : null;
+
+const SimulatedActivityFeed = () => {
   const [visibleNotifications, setVisibleNotifications] = useState<ActivityNotification[]>([]);
 
-  // Sample customer data
-  const sampleCustomers = [
-    { name: 'Sarah A.', product: 'Pret Dress', avatar: '👩‍🦰' },
-    { name: 'Ayesha K.', product: 'Men Scarf', avatar: '👩‍🦱' },
-    { name: 'Hiba M.', product: 'Men Pocket Square', avatar: '👩‍🦳' },
-    { name: 'Saad R.', product: 'Women Silk Scarf', avatar: '👨‍🦱' },
-    { name: 'Usman A.', product: 'Pret Dress', avatar: '👨‍🦲' },
-    { name: 'Fatima S.', product: 'Men Scarf', avatar: '👩‍🦰' },
-    { name: 'Ahmed H.', product: 'Men Pocket Square', avatar: '👨‍🦱' },
-    { name: 'Zara N.', product: 'Women Silk Scarf', avatar: '👩‍🦳' },
-    { name: 'Hassan M.', product: 'Pret Dress', avatar: '👨‍🦰' },
-    { name: 'Amina F.', product: 'Men Scarf', avatar: '👩‍🦲' },
-    { name: 'Layla B.', product: 'Women Scarf', avatar: '👩‍🦰' },
-    { name: 'Noor K.', product: 'Women Pret', avatar: '👩‍🦱' },
-    { name: 'Mariam S.', product: 'Women Scarf', avatar: '👩‍🦳' },
-    { name: 'Yusuf M.', product: 'Women Pret', avatar: '👨‍🦱' },
-    { name: 'Aisha R.', product: 'Women Scarf', avatar: '👩‍🦲' },
-  ];
-
-  // Generate random notifications
-  const generateNotification = (): ActivityNotification => {
-    const customer = sampleCustomers[Math.floor(Math.random() * sampleCustomers.length)];
-    const timeOptions = [
-      '1 min ago', '2 mins ago', '3 mins ago', 
-      '45 secs ago', '30 secs ago', '1 min 30 secs ago',
-      '2 mins 15 secs ago', '1 min 45 secs ago', '50 secs ago'
-    ];
-    const timeAgo = timeOptions[Math.floor(Math.random() * timeOptions.length)];
-
-    return {
-      id: Date.now() + Math.random(),
-      customerName: customer.name,
-      productName: customer.product,
-      timeAgo,
-      avatar: customer.avatar,
-    };
-  };
-
-  // Add new notification every few seconds
   useEffect(() => {
     const addNotification = () => {
       const newNotification = generateNotification();
-      setNotifications(prev => [...prev, newNotification]);
-      
-      // Show notification
       setVisibleNotifications(prev => [...prev, newNotification]);
-      
-      // Remove notification after 8 seconds
+
       setTimeout(() => {
         setVisibleNotifications(prev => prev.filter(n => n.id !== newNotification.id));
       }, 8000);
     };
 
-    // Add first notification after 2 seconds
     const initialTimer = setTimeout(addNotification, 2000);
-    
-    // Add subsequent notifications every 6-12 seconds
+
     const interval = setInterval(addNotification, 6000 + Math.random() * 6000);
 
     return () => {
@@ -86,7 +77,6 @@ const PurchaseNotifications = () => {
     };
   }, []);
 
-  // Remove notification manually
   const removeNotification = (id: number) => {
     setVisibleNotifications(prev => prev.filter(n => n.id !== id));
   };
@@ -112,6 +102,8 @@ const PurchaseNotifications = () => {
               </span>
             </div>
             <button
+              type="button"
+              aria-label="Dismiss"
               onClick={() => removeNotification(notification.id)}
               className="text-gray-400 hover:text-gray-600 transition-colors"
             >
