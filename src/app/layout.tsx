@@ -32,14 +32,6 @@ export const metadata: Metadata = {
     description: 'Discover the latest trends in fashion at Trendy Folds. Shop premium clothing, accessories, and style essentials for every occasion.',
     url: 'https://trendyfolds.com',
     siteName: 'Trendy Folds',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Trendy Folds - Premium Fashion Clothing Store',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
   },
@@ -47,7 +39,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Trendy Folds - Premium Fashion Clothing Store',
     description: 'Discover the latest trends in fashion at Trendy Folds. Shop premium clothing, accessories, and style essentials.',
-    images: ['/og-image.jpg'],
   },
   robots: {
     index: true,
@@ -60,9 +51,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
 }
 
 export default function RootLayout({
@@ -73,10 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" href="/images/icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#000000" />
         <script
@@ -87,7 +72,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "Trendy Folds",
               "url": "https://trendyfolds.com",
-              "logo": "https://trendyfolds.com/logo.png",
+              "logo": "https://trendyfolds.com/images/icon.png",
               "description": "Premium fashion clothing store offering the latest trends and style essentials",
               "address": {
                 "@type": "PostalAddress",
@@ -121,7 +106,7 @@ export default function RootLayout({
         {/* Simple Footer */}
         <footer className="bg-gray-900 text-white py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div>
                 <h3 className="text-yellow-200 text-lg font-semibold mb-4">Trendy Folds</h3>
                 <p className="text-gray-300">Premium fashion for every style.</p>
@@ -136,18 +121,8 @@ export default function RootLayout({
               <div>
                 <h3 className="text-yellow-200 text-lg font-semibold mb-4">Support</h3>
                 <ul className="space-y-2 text-gray-300">
-                  <li><a href="/contact" className="hover:text-white">Contact</a></li>
                   <li><a href="/shipping" className="hover:text-white">Shipping</a></li>
                 </ul>
-              </div>
-              <div>
-                <h3 className="text-yellow-200 text-lg font-semibold mb-4">Newsletter</h3>
-                <p className="text-gray-300 mb-4">Stay updated with latest trends</p>
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-400"
-                />
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">

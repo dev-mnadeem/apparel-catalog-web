@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { storeContact } from '@/lib/store'
 import { ArrowLeftIcon, TruckIcon, ClockIcon } from '@heroicons/react/24/outline'
 
 export default function ShippingPage() {
@@ -159,12 +160,14 @@ export default function ShippingPage() {
         <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 text-center">
           <h3 className="text-lg font-semibold text-black mb-2">Need Help with Shipping?</h3>
           <p className="text-gray-600 mb-4">Our customer service team is here to help with any shipping questions.</p>
-          <Link 
-            href="/contact" 
+          <a
+            href={storeContact.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Contact Support
-          </Link>
+            Message us on WhatsApp
+          </a>
         </div>
       </div>
     </div>

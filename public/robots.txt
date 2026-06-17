@@ -1,19 +1,7 @@
 User-agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://trendyfolds.com/sitemap.xml
-
-# Disallow admin and private areas
-Disallow: /admin/
-Disallow: /private/
 Disallow: /api/
+Disallow: /cart
+Disallow: /checkout
 
-# Allow important pages
-Allow: /categories/
-Allow: /products/
-Allow: /about/
-Allow: /contact/
-Allow: /shipping/
-Allow: /returns/
-Allow: /size-guide/
+Sitemap: https://trendyfolds.com/sitemap.xml

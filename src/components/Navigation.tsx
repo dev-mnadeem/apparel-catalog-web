@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { 
   MagnifyingGlassIcon, 
   ShoppingBagIcon, 
@@ -36,6 +36,7 @@ const CustomTruckIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 import { useCart } from '@/contexts/CartContext'
+import { storeContact } from '@/lib/store'
 import { SHOW_SIMULATED_ACTIVITY } from '@/lib/socialProof';
 
 // Sample customer names for ratings
@@ -50,6 +51,7 @@ const customerNames = [
 const Navigation = () => {
   const { state } = useCart()
   const pathname = usePathname()
+  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [currentRating, setCurrentRating] = useState({ name: '', rating: 0 })
@@ -75,8 +77,8 @@ const Navigation = () => {
   // Handle search functionality
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      // Navigate to search results page or perform search
-      window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsMenuOpen(false);
     }
   };
 
@@ -85,10 +87,10 @@ const Navigation = () => {
       name: 'NEW ARRIVALS', 
       href: '/new-arrivals',
       subcategories: [
-        { name: 'Silk Scarf Collection', href: '/new-arrivals/silk-scarves' },
+        { name: 'Silk Scarf Collection', href: '/categories/women/silk-scarves' },
         { name: 'Pocket Square New', href: '/new-arrivals/pocket-squares' },
         { name: 'Winter Scarf 2025', href: '/new-arrivals/winter-scarves' },
-        { name: 'Men Scarf Latest', href: '/new-arrivals/men-scarves' }
+        { name: 'Men Scarf Latest', href: '/categories/men/silk-scarf' }
       ]
     },
     { 
@@ -168,7 +170,7 @@ const Navigation = () => {
               {/* Customer Service */}
               <div className="flex items-center space-x-2 text-white hover:text-white/80 transition-colors duration-200">
                 <PhoneIcon className="h-3.5 w-3.5 text-blue-100" />
-                <span className="font-medium">Customer Service: +92 328-3250250</span>
+                <span className="font-medium">Customer Service: {storeContact.phoneDisplay}</span>
               </div>
 
               {/* Rating — invented reviewers, so hidden unless explicitly
@@ -187,7 +189,7 @@ const Navigation = () => {
               <div className="flex items-center space-x-3">
                 {/* WhatsApp */}
                 <a
-                  href="https://wa.me/923283250250"
+                  href={storeContact.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-green-200 hover:text-green-100 transition-colors duration-200 group focus:outline-none focus:ring-0"
@@ -200,7 +202,7 @@ const Navigation = () => {
                 
                 {/* Instagram */}
                 <a
-                  href="https://www.instagram.com/trendy_folds/"
+                  href={storeContact.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-pink-200 hover:text-pink-100 transition-colors duration-200 group focus:outline-none focus:ring-0"
@@ -213,7 +215,7 @@ const Navigation = () => {
                 
                 {/* Facebook */}
                 <a
-                  href="https://www.facebook.com/trendyfolds24/"
+                  href={storeContact.facebookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-200 hover:text-blue-100 transition-colors duration-200 group focus:outline-none focus:ring-0"
@@ -224,12 +226,6 @@ const Navigation = () => {
                   </svg>
                 </a>
               </div>
-              
-              {/* Wishlist */}
-              <Link href="/wishlist" className="flex items-center space-x-2 text-white hover:text-white/80 transition-colors duration-200 font-medium hover:underline">
-                <HeartIcon className="h-3.5 w-3.5 text-pink-200" />
-                <span>My Wish List</span>
-              </Link>
 
               {/* Close Button */}
               <button
@@ -534,7 +530,7 @@ const Navigation = () => {
               <div className="flex items-center justify-center space-x-4 px-3 py-2">
                 {/* WhatsApp */}
                 <a
-                  href="https://wa.me/923283250250"
+                  href={storeContact.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-slate-600 hover:text-green-500 transition-colors duration-200 group"
@@ -547,7 +543,7 @@ const Navigation = () => {
                 
                 {/* Instagram */}
                 <a
-                  href="https://www.instagram.com/trendy_folds/"
+                  href={storeContact.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-slate-600 hover:text-pink-500 transition-colors duration-200 group"
@@ -560,7 +556,7 @@ const Navigation = () => {
                 
                 {/* Facebook */}
                 <a
-                  href="https://www.facebook.com/trendyfolds24/"
+                  href={storeContact.facebookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-slate-600 hover:text-blue-500 transition-colors duration-200 group"
@@ -574,7 +570,7 @@ const Navigation = () => {
               
               <div className="flex items-center space-x-2 text-gray-600 px-3 py-2 bg-amber-50 rounded-lg">
                 <PhoneIcon className="h-4 w-4 text-amber-600" />
-                <span className="text-sm font-semibold">📞 Customer Service: +92 328-3250250</span>
+                <span className="text-sm font-semibold">📞 Customer Service: {storeContact.phoneDisplay}</span>
               </div>
               {SHOW_SIMULATED_ACTIVITY && currentRating.name && (
                 <div className="flex items-center space-x-2 text-gray-600 px-3 py-2 bg-amber-50 rounded-lg">
@@ -584,14 +580,6 @@ const Navigation = () => {
                   </span>
                 </div>
               )}
-              <Link
-                href="/wishlist"
-                className="flex items-center space-x-2 text-black hover:text-gray-800 px-3 py-2 text-sm font-bold rounded-lg hover:bg-gradient-to-r hover:from-amber-50 hover:to-amber-100 transition-all duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <HeartIcon className="h-4 w-4 text-amber-600" />
-                <span>My Wish List</span>
-              </Link>
               
               {/* Mobile Shopping Cart */}
               <Link

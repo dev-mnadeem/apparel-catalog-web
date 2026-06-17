@@ -4,6 +4,7 @@
 import Link from 'next/link'
 import { ArrowLeftIcon, MinusIcon, PlusIcon, TrashIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
+import { storeContact } from '@/lib/store'
 
 export default function CartPage() {
   const { state, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart()
@@ -207,7 +208,7 @@ export default function CartPage() {
                   <span className="text-gray-300">•</span>
                   <div className="flex items-center space-x-2">
                     <span className="text-blue-600">📞</span>
-                    <span>Call us at <strong>+92 328-3250250</strong></span>
+                    <span>Call us at <strong>{storeContact.phoneDisplay}</strong></span>
                   </div>
                 </div>
               </div>
