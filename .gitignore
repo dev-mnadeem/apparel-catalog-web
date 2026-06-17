@@ -1,0 +1,54 @@
+# dependencies
+node_modules/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+coverage/
+
+# next.js and build output
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# caches and logs
+.cache/
+.eslintcache
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+tmp/
+
+# environment files (keep the example)
+.env
+.env.*
+!.env.example
+
+# local Python environments
+project_venv/
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+
+# misc
+.DS_Store
+*.pem
+.vercel
+README.preview.html
+.github/
+
+# Original product photos live in Cloudinary, not in git
+public/images/products/
+public/images/products-*/

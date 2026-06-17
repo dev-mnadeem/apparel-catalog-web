@@ -1,0 +1,13 @@
+# Credentials are server-only by design; see .env.example. Nothing here is
+# required to browse the store.
+services:
+  web:
+    build: { context: ., dockerfile: Dockerfile }
+    image: trendy-folds:local
+    container_name: trendy_folds
+    environment:
+      EMAIL_API_KEY: ${EMAIL_API_KEY:-}
+      EMAIL_SERVICE_URL: ${EMAIL_SERVICE_URL:-}
+      WHATSAPP_ACCESS_TOKEN: ${WHATSAPP_ACCESS_TOKEN:-}
+      WHATSAPP_PHONE_NUMBER_ID: ${WHATSAPP_PHONE_NUMBER_ID:-}
+    ports: ["3800:3000"]
