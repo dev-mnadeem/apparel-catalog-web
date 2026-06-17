@@ -2,6 +2,9 @@
   "name": "trendy-folds",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22 <23"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -13,24 +16,24 @@
     "@fontsource/cormorant-garamond": "^5.3.0",
     "@fontsource/jost": "^5.3.0",
     "@heroicons/react": "^2.2.0",
-    "next": "^15.5.28",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "next": "^15.5.29",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.21",
-    "cloudinary": "^2.7.0",
-    "dotenv": "^17.2.2",
-    "eslint": "^9",
-    "eslint-config-next": "^15.5.28",
+    "@eslint/eslintrc": "^3.3.7",
+    "@types/node": "^22",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "autoprefixer": "^10.6.2",
+    "cloudinary": "^2.11.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.5.29",
     "sharp": "^0.35.5",
-    "tailwindcss": "^3.4.17",
-    "typescript": "^5",
-    "vitest": "^3.2.7"
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.0"
   },
   "overrides": {
     "next": {
