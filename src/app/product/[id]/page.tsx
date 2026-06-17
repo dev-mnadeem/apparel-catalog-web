@@ -7,6 +7,7 @@ import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon, ChevronLeftIcon, C
 import { findProduct, relatedProducts, sections, type CatalogueProduct } from '@/lib/catalogue'
 import { MAX_LINE_QUANTITY } from '@/lib/cart'
 import { useCart } from '@/contexts/CartContext'
+import { productImage } from '@/lib/image-mapping'
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const [selectedImage, setSelectedImage] = useState(0)
@@ -108,11 +109,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* Main Hero Image */}
             <div className="relative group bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
               <img 
-                src={activeImage}
+                src={productImage(activeImage)}
                 alt={product.name}
                 className="w-full h-[500px] object-contain bg-gradient-to-br from-gray-50 to-white cursor-zoom-in transition-all duration-500 hover:scale-105"
                 onClick={() => {
-                  window.open(activeImage, '_blank');
+                  window.open(productImage(activeImage, 1600), '_blank');
                 }}
               />
               
@@ -155,7 +156,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     >
                       <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
                         <img
-                          src={image}
+                          src={productImage(image)}
                           alt=""
                           className="w-full h-32 object-contain bg-gradient-to-br from-gray-50 to-white"
                         />
@@ -333,7 +334,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               >
                 <div className="relative">
                   <img 
-                    src={similarProduct.images[0]}
+                    src={productImage(similarProduct.images[0])}
                     alt={similarProduct.name}
                     className="w-full h-64 object-contain bg-white group-hover:scale-105 transition-transform duration-300"
                   />

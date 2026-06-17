@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
+import { productImage } from '@/lib/image-mapping'
 
 export default function PocketSquaresPage() {
   const pocketSquares = [
@@ -75,7 +76,7 @@ export default function PocketSquaresPage() {
             <div key={square.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative">
                 <img 
-                  src={square.image} 
+                  src={productImage(square.image)} 
                   alt={square.name}
                   className="w-full h-64 object-cover"
                 />

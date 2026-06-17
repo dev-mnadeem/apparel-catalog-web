@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
+import { productImage } from '@/lib/image-mapping'
 
 export default function PistachuProductPage() {
   return (
@@ -37,7 +38,7 @@ export default function PistachuProductPage() {
             {/* Main Image */}
             <div className="relative">
               <img 
-                src="/images/products/IMG_4277.png" 
+                src={productImage('/images/products/IMG_4277.png')} 
                 alt="Pistachu Silk Scarf - Main View"
                 className="w-full h-60 object-contain rounded-lg shadow-lg bg-white"
               />
@@ -49,7 +50,7 @@ export default function PistachuProductPage() {
             {/* Hover Image */}
             <div className="relative">
               <img 
-                src="/images/products/18215009-b781-47d5-87fe-b22bdf39d1bf.png" 
+                src={productImage('/images/products/18215009-b781-47d5-87fe-b22bdf39d1bf.png')} 
                 alt="Pistachu Silk Scarf - Alternative View"
                 className="w-full h-60 object-contain rounded-lg shadow-lg bg-white"
               />

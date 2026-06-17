@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
+import { productImage } from '@/lib/image-mapping'
 
 export default function WinterScarvesPage() {
   const winterScarves = [
@@ -75,7 +76,7 @@ export default function WinterScarvesPage() {
             <div key={scarf.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative">
                 <img 
-                  src={scarf.image} 
+                  src={productImage(scarf.image)} 
                   alt={scarf.name}
                   className="w-full h-64 object-cover"
                 />

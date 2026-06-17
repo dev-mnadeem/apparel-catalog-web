@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
-import { getProductImageUrl } from '@/lib/image-mapping'
+import { getProductImageUrl, productImage } from '@/lib/image-mapping'
 
 export default function WomensSilkScarfPage() {
   const { addToCart } = useCart()
@@ -184,7 +184,7 @@ export default function WomensSilkScarfPage() {
             >
               <div className="relative">
                 <img 
-                  src={scarf.image} 
+                  src={productImage(scarf.image)} 
                   alt={scarf.name}
                   className="w-full h-80 object-contain bg-white hover:scale-105 transition-transform duration-300"
                 />

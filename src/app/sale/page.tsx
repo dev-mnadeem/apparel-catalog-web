@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
-import { getProductImageUrl } from '@/lib/image-mapping'
+import { getProductImageUrl, productImage } from '@/lib/image-mapping'
 
 export default function SalePage() {
   const { addToCart, state } = useCart()
@@ -266,7 +266,7 @@ export default function SalePage() {
               <Link href={`/product/${item.id}`} className="block">
                 <div className="relative h-80 flex-shrink-0 overflow-hidden">
                   <img 
-                    src={item.image} 
+                    src={productImage(item.image)} 
                     alt={item.name}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {

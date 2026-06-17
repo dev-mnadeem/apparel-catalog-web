@@ -78,35 +78,33 @@ const imageMapping: Record<string, string> = {
   '/images/products/IMG_0517.png': 'trendy-folds/IMG_0517',
   '/images/products/Untitled (1080 x 1350 px) (3).png': 'trendy-folds/Untitled_1080_x_1350_px_3',
   
-  // Fallback for any unmapped images
-  '/images/products/placeholder.png': 'trendy-folds/IMG_0439',
 }
 
-// Helper function to get Cloudinary URL from old image path
-export function getImageUrl(oldPath: string, width?: number, height?: number): string {
-  const publicId = imageMapping[oldPath]
-  if (publicId) {
-    return getCloudinaryImageUrl(publicId, width, height)
-  }
-  
-  // Fallback to original path if not found in mapping
-  return oldPath
+const PLACEHOLDERS = ['polka', 'stripe', 'check', 'chain', 'paisley', 'floral']
+
+// The original product photos are not in this repository. Without a Cloudinary
+// cloud configured, each photo path maps to a stable demo swatch instead.
+export function placeholderFor(path: string): string {
+  let hash = 0
+  for (const char of path) hash = (hash * 31 + char.charCodeAt(0)) >>> 0
+  return `/images/placeholders/${PLACEHOLDERS[hash % PLACEHOLDERS.length]}.svg`
 }
 
-// Helper function to get optimized product image URL
-export function getProductImageUrl(imagePath: string, width: number = 400, height?: number): string {
-  // For product images, use width only to maintain aspect ratio
-  return getImageUrl(imagePath, width, height)
+function resolve(path: string, width?: number, height?: number, quality?: string): string {
+  if (!path.startsWith('/images/products/')) return path
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  const publicId = imageMapping[path]
+  if (cloudName && publicId) return getCloudinaryImageUrl(cloudName, publicId, width, height, quality)
+  return placeholderFor(path)
 }
 
-// Helper function specifically for hero images with higher quality
+// Accepts a catalogue photo path, an already-resolved URL or a local asset.
+export function productImage(path: string, width = 400, height?: number): string {
+  return resolve(path, width, height)
+}
+
+export const getProductImageUrl = productImage
+
 export function getHeroImageUrl(imagePath: string, width: number = 800, height?: number): string {
-  // For hero images, use higher resolution and quality
-  const publicId = imageMapping[imagePath]
-  if (publicId) {
-    return getCloudinaryImageUrl(publicId, width, height, '80', 'auto')
-  }
-  
-  // Fallback to original path if not found in mapping
-  return imagePath
+  return resolve(imagePath, width, height, '80')
 }

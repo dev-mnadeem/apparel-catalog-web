@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
+import { productImage } from '@/lib/image-mapping'
 
 export default function MensCategoryPage() {
   const allMensProducts = [
@@ -136,7 +137,7 @@ export default function MensCategoryPage() {
               >
                 <div className="relative">
                   <img 
-                    src={product.image} 
+                    src={productImage(product.image)} 
                     alt={product.name}
                     className="w-full h-64 object-contain bg-white"
                   />

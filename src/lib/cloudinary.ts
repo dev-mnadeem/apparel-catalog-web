@@ -1,19 +1,15 @@
-// Client-side only Cloudinary configuration
-// We don't need the full cloudinary SDK for client-side image URLs
-
-// Helper function to get optimized image URL
+// Builds a delivery URL; no SDK or credentials are needed to read public images.
 export function getCloudinaryImageUrl(
+  cloudName: string,
   publicId: string,
   width?: number,
   height?: number,
   quality: string = 'auto',
   format: string = 'auto'
 ): string {
-  const baseUrl = `https://res.cloudinary.com/dgn4nknky/image/upload`
-  
-  const transformations = []
-  
-  // Use fit: 'inside' to maintain aspect ratio and prevent stretching
+  const transformations: string[] = []
+
+  // c_fit keeps the aspect ratio so tall scarf photos are not stretched.
   if (width && height) {
     transformations.push(`w_${width},h_${height},c_fit`)
   } else if (width) {
@@ -21,17 +17,9 @@ export function getCloudinaryImageUrl(
   } else if (height) {
     transformations.push(`h_${height},c_scale`)
   }
-  
-  // Use higher quality for better image clarity
   if (quality) transformations.push(`q_${quality}`)
   if (format) transformations.push(`f_${format}`)
-  
-  // Add DPR (Device Pixel Ratio) support for high-DPI displays
-  transformations.push(`dpr_auto`)
-  
-  const transformString = transformations.length > 0 ? `/${transformations.join(',')}` : ''
-  
-  return `${baseUrl}${transformString}/${publicId}`
-}
+  transformations.push('dpr_auto')
 
-// Upload functions are handled server-side only
+  return `https://res.cloudinary.com/${cloudName}/image/upload/${transformations.join(',')}/${publicId}`
+}

@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { searchProducts, sections } from '@/lib/catalogue'
+import { productImage } from '@/lib/image-mapping'
 
 function SearchResults() {
   const query = useSearchParams().get('q')?.trim() ?? ''
@@ -36,7 +37,7 @@ function SearchResults() {
           <li key={product.id}>
             <Link href={`/product/${product.id}`} className="group block overflow-hidden rounded-lg border border-gray-200 bg-white">
               <img
-                src={product.images[0]}
+                src={productImage(product.images[0])}
                 alt={product.name}
                 className="aspect-[4/5] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               />

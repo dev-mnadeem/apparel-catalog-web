@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
+import { productImage } from '@/lib/image-mapping'
 
 export default function NewArrivalsPage() {
   const { addToCart, state } = useCart()
@@ -454,7 +455,7 @@ export default function NewArrivalsPage() {
             >
               <div className="relative overflow-hidden">
                 <img 
-                  src={product.image} 
+                  src={productImage(product.image)} 
                   alt={product.name}
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />

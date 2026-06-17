@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { productImage as resolveImage } from '@/lib/image-mapping'
 
 interface CartNotificationProps {
   message: string
@@ -15,7 +16,7 @@ const CartNotification: React.FC<CartNotificationProps> = ({ message, productNam
   <div className="animate-slide-in-right rounded-lg border border-gray-200 bg-white p-4 shadow-lg">
     <div className="flex items-start gap-3">
       <img
-        src={productImage}
+        src={resolveImage(productImage)}
         alt=""
         className="h-12 w-12 flex-shrink-0 rounded-lg border border-gray-200 object-cover"
       />

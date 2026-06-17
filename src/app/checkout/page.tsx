@@ -10,6 +10,7 @@ import {
   MinusIcon
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { productImage } from '@/lib/image-mapping'
 
 export default function CheckoutPage() {
   const { state, clearCart, getCartTotal, removeFromCart, updateQuantity } = useCart()
@@ -100,7 +101,7 @@ export default function CheckoutPage() {
                     <div key={item.id} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl">
                       <div className="relative">
                         <img 
-                          src={item.image} 
+                          src={productImage(item.image)} 
                           alt={item.name}
                           className="w-20 h-20 object-cover rounded-lg shadow-md"
                         />

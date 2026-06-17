@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
+import { productImage } from '@/lib/image-mapping'
 
 export default function AllCategoriesPage() {
   const allProducts = [
@@ -414,7 +415,7 @@ export default function AllCategoriesPage() {
               <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="relative">
                   <img 
-                    src={product.image} 
+                    src={productImage(product.image)} 
                     alt={product.name}
                     className="w-full h-48 object-cover"
                   />

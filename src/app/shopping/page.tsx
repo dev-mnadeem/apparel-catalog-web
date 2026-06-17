@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { ArrowLeftIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
+import { productImage } from '@/lib/image-mapping'
 
 export default function ShoppingPage() {
   const { addToCart } = useCart()
@@ -157,7 +158,7 @@ export default function ShoppingPage() {
               >
                 <div className="aspect-square mb-4 overflow-hidden rounded-lg">
                   <img
-                    src={category.image}
+                    src={productImage(category.image)}
                     alt={category.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
@@ -183,7 +184,7 @@ export default function ShoppingPage() {
               <div key={product.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="aspect-square overflow-hidden">
                   <img
-                    src={product.image}
+                    src={productImage(product.image)}
                     alt={product.name}
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                   />

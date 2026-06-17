@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeftIcon, MinusIcon, PlusIcon, TrashIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
 import { storeContact } from '@/lib/store'
+import { productImage } from '@/lib/image-mapping'
 
 export default function CartPage() {
   const { state, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart()
@@ -81,7 +82,7 @@ export default function CartPage() {
                   {/* Product Image */}
                   <div className="flex-shrink-0">
                     <img
-                      src={item.selectedDesign?.image || item.image}
+                      src={productImage(item.selectedDesign?.image || item.image)}
                       alt={item.name}
                       className="w-24 h-24 object-contain rounded-lg bg-gray-50"
                     />
@@ -242,7 +243,7 @@ export default function CartPage() {
               >
                 <div className="aspect-square bg-gray-50">
                   <img
-                    src={product.image}
+                    src={productImage(product.image)}
                     alt={product.name}
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
                   />

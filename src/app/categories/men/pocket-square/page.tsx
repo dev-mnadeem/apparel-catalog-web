@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon } from '@heroicons/react/24/outline'
-import { getProductImageUrl } from '@/lib/image-mapping'
+import { getProductImageUrl, productImage } from '@/lib/image-mapping'
 
 export default function PocketSquarePage() {
   const pocketSquares = [
@@ -226,7 +226,7 @@ export default function PocketSquarePage() {
             <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
               <div className="relative">
                 <img 
-                  src={product.image} 
+                  src={productImage(product.image)} 
                   alt={product.name}
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />

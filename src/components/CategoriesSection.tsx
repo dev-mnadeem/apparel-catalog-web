@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/contexts/CartContext'
-import { getProductImageUrl, getHeroImageUrl } from '@/lib/image-mapping'
+import { getProductImageUrl, getHeroImageUrl, productImage } from '@/lib/image-mapping'
 
 export default function CategoriesSection() {
   const { addToCart } = useCart()
@@ -182,7 +182,7 @@ export default function CategoriesSection() {
               >
                 <div className="relative mb-4">
                   <img 
-                    src={category.image}
+                    src={productImage(category.image)}
                     alt={category.name}
                     className="w-full h-64 object-cover object-top rounded-lg group-hover:scale-105 transition-transform duration-300"
                   />
