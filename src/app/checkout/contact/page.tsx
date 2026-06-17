@@ -14,6 +14,7 @@ import {
   ShieldCheckIcon
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import BagLoading from '@/components/BagLoading'
 
 interface CheckoutForm {
   firstName: string
@@ -27,7 +28,7 @@ interface CheckoutForm {
 }
 
 export default function ContactPage() {
-  const { state, clearCart, getCartTotal } = useCart()
+  const { state, isHydrated, clearCart, getCartTotal } = useCart()
   const [formData, setFormData] = useState<CheckoutForm>({
     firstName: '',
     lastName: '',
@@ -104,6 +105,8 @@ export default function ContactPage() {
       setIsSubmitting(false)
     }
   }
+
+  if (!isHydrated) return <BagLoading />
 
   if (state.items.length === 0 && !orderSuccess) {
     return (

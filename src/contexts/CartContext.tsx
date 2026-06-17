@@ -17,6 +17,8 @@ const CartContext = createContext<{
   refreshCartPrices: () => void
   setNotificationHandler: (callback: (productName: string, productImage: string) => void) => void
   hasItems: boolean
+  // False until the saved bag has been read from localStorage.
+  isHydrated: boolean
 } | null>(null)
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
@@ -90,7 +92,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       getCartTotal,
       refreshCartPrices,
       setNotificationHandler,
-      hasItems
+      hasItems,
+      isHydrated: hydrated
     }}>
       {children}
     </CartContext.Provider>

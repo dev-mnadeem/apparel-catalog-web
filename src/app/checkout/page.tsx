@@ -10,9 +10,10 @@ import {
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { productImage } from '@/lib/image-mapping'
+import BagLoading from '@/components/BagLoading'
 
 export default function CheckoutPage() {
-  const { state, getCartTotal, removeFromCart, updateQuantity } = useCart()
+  const { state, isHydrated, getCartTotal, removeFromCart, updateQuantity } = useCart()
 
   const handleQuantityChange = (itemId: number, newQuantity: number, designId?: number) => {
     if (newQuantity <= 0) {
@@ -21,6 +22,8 @@ export default function CheckoutPage() {
       updateQuantity(itemId, newQuantity, designId)
     }
   }
+
+  if (!isHydrated) return <BagLoading />
 
   if (state.items.length === 0) {
     return (

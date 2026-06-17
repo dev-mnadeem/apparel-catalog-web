@@ -6,9 +6,10 @@ import { ArrowLeftIcon, MinusIcon, PlusIcon, TrashIcon, ShoppingBagIcon } from '
 import { useCart } from '@/contexts/CartContext'
 import { storeContact } from '@/lib/store'
 import { productImage } from '@/lib/image-mapping'
+import BagLoading from '@/components/BagLoading'
 
 export default function CartPage() {
-  const { state, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart()
+  const { state, isHydrated, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart()
 
   const handleUpdateQuantity = (id: number, newQuantity: number, designId?: number) => {
     if (newQuantity <= 0) {
@@ -17,6 +18,8 @@ export default function CartPage() {
       updateQuantity(id, newQuantity, designId)
     }
   }
+
+  if (!isHydrated) return <BagLoading />
 
   if (state.items.length === 0) {
     return (
