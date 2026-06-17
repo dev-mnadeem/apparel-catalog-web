@@ -4,11 +4,14 @@ import { useState, use } from 'react'
 import Link from 'next/link'
 import { ArrowLeftIcon, HeartIcon, ShoppingBagIcon, StarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
-import { findProduct, relatedProducts, sections } from '@/lib/catalogue'
+import { findProduct, relatedProducts, sections, type CatalogueProduct } from '@/lib/catalogue'
+import { MAX_LINE_QUANTITY } from '@/lib/cart'
+import { useCart } from '@/contexts/CartContext'
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const [selectedImage, setSelectedImage] = useState(0)
   const [quantity, setQuantity] = useState(1)
+  const { addToCart } = useCart()
   const [isWishlisted, setIsWishlisted] = useState(false)
 
   const resolvedParams = use(params)
@@ -28,6 +31,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   }
 
   const section = sections[product.section]
+  const bagLine = (item: CatalogueProduct) => ({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    originalPrice: item.originalPrice,
+    image: item.images[0] ?? '',
+    category: `${sections[item.section].department} - ${sections[item.section].label}`,
+  })
   const images = product.images.length > 0 ? product.images : ['']
   const activeImage = images[Math.min(selectedImage, images.length - 1)]
 
@@ -58,9 +69,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               >
                 <HeartIcon className={`h-6 w-6 ${isWishlisted ? 'fill-current' : ''}`} />
               </button>
-              <button className="p-2 text-gray-600 hover:text-black transition-colors">
+              <Link href="/cart" aria-label="View bag" className="p-2 text-gray-600 hover:text-black transition-colors">
                 <ShoppingBagIcon className="h-6 w-6" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -264,18 +275,24 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             {/* Quantity and Add to Bag */}
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
-                <label className="text-sm font-medium text-gray-700">Quantity:</label>
-                <div className="flex items-center border border-gray-300 rounded-lg">
-                  <button 
-                    className="p-2 hover:bg-gray-100 transition-colors"
+                <span id="quantity-label" className="text-sm font-medium text-gray-700">Quantity:</span>
+                <div role="group" aria-labelledby="quantity-label" className="flex items-center border border-gray-300 rounded-lg">
+                  <button
+                    type="button"
+                    aria-label="Decrease quantity"
+                    disabled={quantity <= 1}
+                    className="p-2 hover:bg-gray-100 transition-colors disabled:opacity-40"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   >
                     <ChevronLeftIcon className="h-4 w-4" />
                   </button>
-                  <span className="px-4 py-2 text-center min-w-[3rem]">{quantity}</span>
-                  <button 
-                    className="p-2 hover:bg-gray-100 transition-colors"
-                    onClick={() => setQuantity(quantity + 1)}
+                  <span aria-live="polite" className="px-4 py-2 text-center min-w-[3rem]">{quantity}</span>
+                  <button
+                    type="button"
+                    aria-label="Increase quantity"
+                    disabled={quantity >= MAX_LINE_QUANTITY}
+                    className="p-2 hover:bg-gray-100 transition-colors disabled:opacity-40"
+                    onClick={() => setQuantity(Math.min(MAX_LINE_QUANTITY, quantity + 1))}
                   >
                     <ChevronRightIcon className="h-4 w-4" />
                   </button>
@@ -287,7 +304,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   SOLD OUT
                 </button>
               ) : (
-                <button className="w-full bg-black text-white py-4 px-6 rounded-lg hover:bg-gray-800 transition-colors font-medium text-lg">
+                <button
+                  type="button"
+                  onClick={() => addToCart(bagLine(product), quantity)}
+                  className="w-full bg-black text-white py-4 px-6 rounded-lg hover:bg-gray-800 transition-colors font-medium text-lg"
+                >
                   ADD TO BAG - {product.price}
                 </button>
               )}
@@ -374,7 +395,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                       className="w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors font-medium"
                       onClick={(e) => {
                         e.stopPropagation();
-                        // Add to bag functionality
+                        addToCart(bagLine(similarProduct));
                       }}
                     >
                       ADD TO BAG

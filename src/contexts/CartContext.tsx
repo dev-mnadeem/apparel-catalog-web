@@ -9,7 +9,7 @@ export type { CartItem } from '@/lib/cart'
 const CartContext = createContext<{
   state: CartState
   dispatch: React.Dispatch<CartAction>
-  addToCart: (item: Omit<CartItem, 'quantity'>) => void
+  addToCart: (item: Omit<CartItem, 'quantity'>, quantity?: number) => void
   removeFromCart: (id: number, designId?: number) => void
   updateQuantity: (id: number, quantity: number, designId?: number) => void
   clearCart: () => void
@@ -50,8 +50,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try { localStorage.setItem('shopping-cart', JSON.stringify(state.items)) } catch { /* The in-memory basket remains usable. */ }
   }, [state.items, hydrated])
 
-  const addToCart = (item: Omit<CartItem, 'quantity'>) => {
-    dispatch({ type: 'ADD_ITEM', payload: item })
+  const addToCart = (item: Omit<CartItem, 'quantity'>, quantity = 1) => {
+    dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity } })
 
     // Show notification if callback is available
     if (notificationCallback) {

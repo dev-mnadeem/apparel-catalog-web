@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { cartReducer, parseStoredCart, type CartItem, type CartState } from './cart';
+import { cartReducer, parseStoredCart, MAX_LINE_QUANTITY, type CartItem, type CartState } from './cart';
 const empty: CartState = { items: [], totalItems: 0, totalPrice: 0 };
 const product = (designId?: number): Omit<CartItem, 'quantity'> => ({ id: 10, name: 'Scarf', price: 'Rs.1,250', image: '/fixture.png', category: 'Scarves', ...(designId === undefined ? {} : { selectedDesign: { id: designId, name: 'Design '+designId, image: '/fixture.png' } }) });
 function twoVariants() {
- let state=cartReducer(empty,{type:'ADD_ITEM',payload:product(1)});
+ const state=cartReducer(empty,{type:'ADD_ITEM',payload:product(1)});
  return cartReducer(state,{type:'ADD_ITEM',payload:product(2)});
 }
 describe('design-specific cart operations',()=>{
@@ -26,5 +26,19 @@ describe('design-specific cart operations',()=>{
   expect(parseStoredCart({items:[]})).toEqual([]);
   expect(parseStoredCart([null,{}, {...product(),quantity:-1},{...product(),price:'bad',quantity:1}])).toEqual([]);
   expect(parseStoredCart([{...product(),quantity:2}])).toHaveLength(1);
+ });
+});
+describe('adding several at once',()=>{
+ it('adds the requested quantity to a new line and merges into an existing one',()=>{
+  let state=cartReducer(empty,{type:'ADD_ITEM',payload:{...product(1),quantity:3}});
+  expect(state.items[0].quantity).toBe(3);expect(state.totalItems).toBe(3);expect(state.totalPrice).toBe(3750);
+  state=cartReducer(state,{type:'ADD_ITEM',payload:{...product(1),quantity:2}});
+  expect(state.items).toHaveLength(1);expect(state.items[0].quantity).toBe(5);
+ });
+ it('caps a line at the maximum and ignores invalid quantities',()=>{
+  const full=cartReducer(empty,{type:'ADD_ITEM',payload:{...product(1),quantity:150}});
+  expect(full.items[0].quantity).toBe(MAX_LINE_QUANTITY);expect(full.totalItems).toBe(MAX_LINE_QUANTITY);
+  expect(cartReducer(full,{type:'ADD_ITEM',payload:product(1)})).toBe(full);
+  for(const quantity of [0,-2,1.5]) expect(cartReducer(empty,{type:'ADD_ITEM',payload:{...product(1),quantity}})).toBe(empty);
  });
 });

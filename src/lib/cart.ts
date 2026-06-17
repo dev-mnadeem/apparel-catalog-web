@@ -13,6 +13,8 @@ export interface CartItem {
   }
 }
 
+export const MAX_LINE_QUANTITY = 99
+
 export interface CartState {
   items: CartItem[]
   totalItems: number
@@ -20,7 +22,7 @@ export interface CartState {
 }
 
 export type CartAction =
-  | { type: 'ADD_ITEM'; payload: Omit<CartItem, 'quantity'> }
+  | { type: 'ADD_ITEM'; payload: Omit<CartItem, 'quantity'> & { quantity?: number } }
   | { type: 'REMOVE_ITEM'; payload: { id: number; designId?: number } }
   | { type: 'UPDATE_QUANTITY'; payload: { id: number; quantity: number; designId?: number } }
   | { type: 'CLEAR_CART' }
@@ -32,7 +34,7 @@ export function parseStoredCart(value: unknown): CartItem[] {
     if (!item || typeof item !== 'object') return false;
     const price = typeof item.price === 'string' ? Number(item.price.replace(/Rs\.?|,/gi, '').trim()) : NaN;
     return Number.isInteger(item.id) && typeof item.name === 'string' &&
-      Number.isFinite(price) && price >= 0 && Number.isInteger(item.quantity) && item.quantity > 0 && item.quantity <= 99 &&
+      Number.isFinite(price) && price >= 0 && Number.isInteger(item.quantity) && item.quantity > 0 && item.quantity <= MAX_LINE_QUANTITY &&
       typeof item.image === 'string' && typeof item.category === 'string' &&
       (item.selectedDesign === undefined || (item.selectedDesign && Number.isInteger(item.selectedDesign.id) && typeof item.selectedDesign.name === 'string' && typeof item.selectedDesign.image === 'string'));
   });
@@ -41,34 +43,22 @@ export function parseStoredCart(value: unknown): CartItem[] {
 export function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'ADD_ITEM': {
-      const existingItem = state.items.find(item =>
-        item.id === action.payload.id &&
-        item.selectedDesign?.id === action.payload.selectedDesign?.id
-      )
+      const { quantity: requested = 1, ...product } = action.payload
+      if (!Number.isInteger(requested) || requested < 1) return state
+      const sameLine = (item: CartItem) =>
+        item.id === product.id && item.selectedDesign?.id === product.selectedDesign?.id
+      const existingItem = state.items.find(sameLine)
+      const current = existingItem?.quantity ?? 0
+      const quantity = Math.min(MAX_LINE_QUANTITY, current + requested)
+      if (quantity === current) return state
 
-      if (existingItem?.quantity === 99) return state;
-      if (existingItem) {
-        const updatedItems = state.items.map(item =>
-          item.id === action.payload.id &&
-          item.selectedDesign?.id === action.payload.selectedDesign?.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-        return {
-          ...state,
-          items: updatedItems,
-          totalItems: state.totalItems + 1,
-          totalPrice: calculateTotalPrice(updatedItems)
-        }
-      } else {
-        const newItem = { ...action.payload, quantity: 1 }
-        const updatedItems = [...state.items, newItem]
-        return {
-          ...state,
-          items: updatedItems,
-          totalItems: state.totalItems + 1,
-          totalPrice: calculateTotalPrice(updatedItems)
-        }
+      const updatedItems = existingItem
+        ? state.items.map(item => (sameLine(item) ? { ...item, quantity } : item))
+        : [...state.items, { ...product, quantity }]
+      return {
+        items: updatedItems,
+        totalItems: updatedItems.reduce((sum, item) => sum + item.quantity, 0),
+        totalPrice: calculateTotalPrice(updatedItems)
       }
     }
 
@@ -83,7 +73,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
     }
 
     case 'UPDATE_QUANTITY': {
-      if (!Number.isInteger(action.payload.quantity) || action.payload.quantity > 99) return state;
+      if (!Number.isInteger(action.payload.quantity) || action.payload.quantity > MAX_LINE_QUANTITY) return state;
       if (action.payload.quantity <= 0) {
         return cartReducer(state, { type: 'REMOVE_ITEM', payload: { id: action.payload.id, designId: action.payload.designId } })
       }
