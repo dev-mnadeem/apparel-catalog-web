@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply text-gray-800 bg-amber-50 font-poppins;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight font-poppins text-black;
+  }
+  
+  /* Ensure proper spacing for fixed navbar */
+  main {
+    padding-top: 80px; /* Clean spacing for navbar */
+  }
+  
+  /* Additional spacing for checkout pages */
+  .checkout-page {
+    padding-top: 100px;
+  }
+  
+  /* Ensure proper spacing for all main content areas */
+  .main-content {
+    padding-top: 80px;
+  }
+  
+  /* Specific spacing for empty cart states */
+  .empty-cart {
+    padding-top: 100px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-black text-amber-50 px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:ring-offset-amber-50 shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-amber-100 text-black px-6 py-3 rounded-lg font-semibold hover:bg-amber-50 border border-black/20 transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-amber-50;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-black text-black px-6 py-3 rounded-lg font-semibold hover:bg-black hover:text-amber-50 transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-amber-50;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border border-black/10;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2 border border-black/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent bg-white text-black placeholder-gray-500;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent;
+  }
+  
+  .shadow-soft {
+    box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+  }
+  
+  .animation-fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  
+  .animation-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .amber-shimmer {
+    background: linear-gradient(90deg, transparent 0%, #fef3c7 25%, #fde68a 50%, #fef3c7 75%, transparent 100%);
+    background-size: 200% 100%;
+    animation: amberShimmer 3s ease-in-out infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes amberShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fef3c7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
