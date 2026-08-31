@@ -28,8 +28,10 @@ class WhatsAppService {
   constructor() {
     // These should be environment variables in production
     this.apiUrl = process.env.NEXT_PUBLIC_WHATSAPP_API_URL || 'https://graph.facebook.com/v18.0'
-    this.accessToken = process.env.NEXT_PUBLIC_WHATSAPP_ACCESS_TOKEN || ''
-    this.phoneNumberId = process.env.NEXT_PUBLIC_WHATSAPP_PHONE_NUMBER_ID || ''
+    // Never read a credential in browser code. NEXT_PUBLIC_ inlines it into
+    // the bundle; the token lives on the server, behind /api/notify.
+    this.accessToken = ''
+    this.phoneNumberId = ''
   }
 
   /**

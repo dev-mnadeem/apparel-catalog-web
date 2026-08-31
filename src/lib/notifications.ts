@@ -29,7 +29,11 @@ class NotificationService {
 
   constructor() {
     // Email service configuration (you can use services like SendGrid, Mailgun, etc.)
-    this.emailApiKey = process.env.NEXT_PUBLIC_EMAIL_API_KEY || ''
+    // Deliberately empty. The API key used to be read from
+    // NEXT_PUBLIC_EMAIL_API_KEY here — which Next.js inlines into the client
+    // bundle, publishing it to every visitor. Sending is done by
+    // /api/notify, which runs on the server and holds the key there.
+    this.emailApiKey = ''
     this.emailServiceUrl = process.env.NEXT_PUBLIC_EMAIL_SERVICE_URL || ''
   }
 
@@ -94,41 +98,23 @@ class NotificationService {
    * Send email confirmation
    */
   private async sendEmailConfirmation(orderDetails: OrderDetails): Promise<boolean> {
+    // Posts to our own server route, which holds the credentials. The browser
+    // never sees them.
     try {
-      // Check if email service is configured
-      if (!this.emailApiKey || !this.emailServiceUrl) {
-        console.log('Email service not configured - skipping email')
-        return false
-      }
-
-      const emailData = {
-        to: orderDetails.email,
-        subject: `Order Confirmed - ${orderDetails.orderId}`,
-        html: this.formatEmailConfirmation(orderDetails),
-        text: this.formatEmailConfirmationText(orderDetails)
-      }
-
-      // Send email via configured service
-      const response = await fetch(this.emailServiceUrl, {
+      const response = await fetch('/api/notify', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${this.emailApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(emailData)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          order: orderDetails,
+          email: orderDetails.email,
+          phone: orderDetails.phoneNumber,
+        }),
       })
-
-      if (!response.ok) {
-        console.error(`Email API error: ${response.status} - ${response.statusText}`)
-        return false
-      }
-
+      if (!response.ok) return false
       const result = await response.json()
-      console.log('Email sent successfully:', result)
-      return true
-
+      return Array.isArray(result.delivered) && result.delivered.length > 0
     } catch (error) {
-      console.error('Error sending email:', error)
+      console.error('notification request failed:', error)
       return false
     }
   }
