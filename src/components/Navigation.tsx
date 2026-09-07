@@ -36,6 +36,7 @@ const CustomTruckIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 import { useCart } from '@/contexts/CartContext'
+import { SHOW_SIMULATED_ACTIVITY } from '@/lib/socialProof';
 
 // Sample customer names for ratings
 const customerNames = [
@@ -56,6 +57,9 @@ const Navigation = () => {
 
   // Generate random customer rating
   const generateRandomRating = () => {
+    // Invented reviewers with an invented score. Disabled unless
+    // NEXT_PUBLIC_SHOW_SIMULATED_ACTIVITY=true — see src/lib/socialProof.ts.
+    if (!SHOW_SIMULATED_ACTIVITY) return { name: '', rating: 0 };
     const randomName = customerNames[Math.floor(Math.random() * customerNames.length)];
     const randomRating = 4 + Math.random(); // Rating between 4.0 and 5.0
     setCurrentRating({ name: randomName, rating: randomRating });
@@ -167,13 +171,17 @@ const Navigation = () => {
                 <span className="font-medium">Customer Service: +92 328-3250250</span>
               </div>
 
-              {/* Rating */}
-              <div className="hidden md:flex items-center space-x-2 text-white">
-                <StarIcon className="h-3.5 w-3.5 text-yellow-100" />
-                <span className="font-medium">
-                  {currentRating.rating.toFixed(1)}/5 - {currentRating.name}
-                </span>
-              </div>
+              {/* Rating — invented reviewers, so hidden unless explicitly
+                  enabled. Rendering the disabled state showed "0.0/5 -",
+                  which looks like a real store with no reviews. */}
+              {SHOW_SIMULATED_ACTIVITY && currentRating.name && (
+                <div className="hidden md:flex items-center space-x-2 text-white">
+                  <StarIcon className="h-3.5 w-3.5 text-yellow-100" />
+                  <span className="font-medium">
+                    {currentRating.rating.toFixed(1)}/5 - {currentRating.name}
+                  </span>
+                </div>
+              )}
 
               {/* Social Media Icons */}
               <div className="flex items-center space-x-3">
@@ -568,12 +576,14 @@ const Navigation = () => {
                 <PhoneIcon className="h-4 w-4 text-amber-600" />
                 <span className="text-sm font-semibold">📞 Customer Service: +92 328-3250250</span>
               </div>
-              <div className="flex items-center space-x-2 text-gray-600 px-3 py-2 bg-amber-50 rounded-lg">
-                <StarIcon className="h-4 w-4 text-amber-500" />
-                <span className="text-sm font-semibold">
-                  {currentRating.rating.toFixed(1)}/5 - {currentRating.name}
-                </span>
-              </div>
+              {SHOW_SIMULATED_ACTIVITY && currentRating.name && (
+                <div className="flex items-center space-x-2 text-gray-600 px-3 py-2 bg-amber-50 rounded-lg">
+                  <StarIcon className="h-4 w-4 text-amber-500" />
+                  <span className="text-sm font-semibold">
+                    {currentRating.rating.toFixed(1)}/5 - {currentRating.name}
+                  </span>
+                </div>
+              )}
               <Link
                 href="/wishlist"
                 className="flex items-center space-x-2 text-black hover:text-gray-800 px-3 py-2 text-sm font-bold rounded-lg hover:bg-gradient-to-r hover:from-amber-50 hover:to-amber-100 transition-all duration-200"

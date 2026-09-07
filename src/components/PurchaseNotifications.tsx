@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { SHOW_SIMULATED_ACTIVITY } from '@/lib/socialProof';
 
 interface ActivityNotification {
   id: number;
@@ -12,6 +13,11 @@ interface ActivityNotification {
 }
 
 const PurchaseNotifications = () => {
+  // These notifications are invented, not real customer activity — a name is
+  // picked from a hardcoded list every few seconds. See src/lib/socialProof.ts.
+  // Off unless NEXT_PUBLIC_SHOW_SIMULATED_ACTIVITY=true.
+  if (!SHOW_SIMULATED_ACTIVITY) return null;
+
   const [notifications, setNotifications] = useState<ActivityNotification[]>([]);
   const [visibleNotifications, setVisibleNotifications] = useState<ActivityNotification[]>([]);
 
