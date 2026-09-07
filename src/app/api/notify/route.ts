@@ -1,23 +1,5 @@
-/**
- * Server-side order notification.
- *
- * The email and WhatsApp credentials used to be read as
- * `process.env.NEXT_PUBLIC_EMAIL_API_KEY` and
- * `process.env.NEXT_PUBLIC_WHATSAPP_ACCESS_TOKEN`, from code that runs in the
- * browser. `NEXT_PUBLIC_` is not a namespace — it is an instruction to Next.js
- * to inline the value into the client bundle. Both keys would have been
- * readable by anyone who opened devtools, and both were being sent from the
- * browser as `Authorization: Bearer …`.
- *
- * Nothing was leaked in practice, because no `.env` was ever committed and the
- * variables were never set. But the code required them to be set to work, so
- * the first successful deployment would have published them.
- *
- * The credentials are server-only now (no `NEXT_PUBLIC_` prefix, so Next.js
- * will not bundle them) and the browser posts here instead.
- */
-
 import { NextRequest, NextResponse } from "next/server";
+import { timingSafeEqual } from "node:crypto";
 
 export const runtime = "nodejs";
 
@@ -47,6 +29,7 @@ async function sendEmail(order: unknown, to: string): Promise<NotifyResult> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ to, order }),
+    signal: AbortSignal.timeout(8000),
   });
   return { channel: "email", sent: res.ok, reason: res.ok ? undefined : `HTTP ${res.status}` };
 }
@@ -67,35 +50,55 @@ async function sendWhatsApp(order: unknown, to: string): Promise<NotifyResult> {
       type: "text",
       text: { body: JSON.stringify(order) },
     }),
+    signal: AbortSignal.timeout(8000),
   });
   return { channel: "whatsapp", sent: res.ok, reason: res.ok ? undefined : `HTTP ${res.status}` };
 }
 
 export async function POST(request: NextRequest) {
+  // Provider access is reserved for a server-side order integration.
+  const token = process.env.NOTIFICATION_SERVICE_TOKEN || '';
+  const supplied = request.headers.get('authorization') || '';
+  if (!token) return NextResponse.json({ error: 'Notification service is unavailable.' }, { status: 503 });
+  const expected = Buffer.from('Bearer ' + token);
+  const received = Buffer.from(supplied);
+  if (received.length !== expected.length || !timingSafeEqual(received, expected))
+    return NextResponse.json({ error: 'Authorization required.' }, { status: 401 });
+  const reader = request.body?.getReader();
+  const chunks: Uint8Array[] = [];
+  let length = 0;
+  if (reader) {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      length += value.byteLength;
+      if (length > 16384) {
+        await reader.cancel();
+        return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+      }
+      chunks.push(value);
+    }
+  }
+  const bytes = Buffer.concat(chunks);
   let payload: { order?: unknown; email?: string; phone?: string };
-  try {
-    payload = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Body must be JSON." }, { status: 400 });
-  }
-
+  try { payload = JSON.parse(new TextDecoder().decode(bytes)); }
+  catch { return NextResponse.json({ error: 'Body must be JSON.' }, { status: 400 }); }
+  if (!payload || typeof payload !== 'object') return NextResponse.json({ error: 'Invalid request.' }, { status: 400 });
   const { order, email, phone } = payload;
-  if (!order) {
-    return NextResponse.json({ error: "An `order` is required." }, { status: 400 });
-  }
+  if (!order || typeof order !== 'object' ||
+      (email !== undefined && (typeof email !== 'string' || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) ||
+      (phone !== undefined && (typeof phone !== 'string' || !/^\+?[0-9 -]{7,24}$/.test(phone))))
+    return NextResponse.json({ error: 'Valid order and contact details are required.' }, { status: 400 });
 
   const results = await Promise.all([
-    email ? sendEmail(order, email) : Promise.resolve<NotifyResult>({
+    email ? sendEmail(order, email).catch(() => ({ channel: 'email', sent: false, reason: 'provider unavailable' } as NotifyResult)) : Promise.resolve<NotifyResult>({
       channel: "email", sent: false, reason: "no email address supplied",
     }),
-    phone ? sendWhatsApp(order, phone) : Promise.resolve<NotifyResult>({
+    phone ? sendWhatsApp(order, phone).catch(() => ({ channel: 'whatsapp', sent: false, reason: 'provider unavailable' } as NotifyResult)) : Promise.resolve<NotifyResult>({
       channel: "whatsapp", sent: false, reason: "no phone number supplied",
     }),
   ]);
 
-  // A notification failing must not fail the order. The customer has already
-  // paid attention; losing their basket because an email provider is down
-  // would be the worse outcome.
   return NextResponse.json({
     ok: true,
     delivered: results.filter((r) => r.sent).map((r) => r.channel),

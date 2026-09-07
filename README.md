@@ -1,168 +1,103 @@
 # Trendy Folds
 
-An ecommerce storefront for a fashion label: catalogue, categories, search,
-cart, and a WhatsApp/email order flow.
+A fashion catalogue with category browsing, search, product designs and a local
+shopping cart. The catalogue is committed data; images are served from Cloudinary.
+Checkout collects a request, but this repository does not contain an order database,
+inventory reservation or payment integration.
 
-Next.js 15, React 19, TypeScript, Tailwind, Cloudinary for images.
+![The catalogue](docs/screenshots/storefront.png)
 
-![The storefront](docs/screenshots/storefront.png)
+Built with Next.js 15, React 19, TypeScript and Tailwind CSS.
 
----
+## Try the catalogue
 
-## Run it
+Use Node 22:
 
 ```bash
-docker compose up -d --build
+npm ci --ignore-scripts
+npm run dev
 ```
 
-Open **http://localhost:3800**. No credentials are needed to browse; see
-`.env.example` for the ones that enable order notifications.
+Open http://localhost:3000. Browsing and cart updates need no credentials. For a
+production-style local run use `npm run build` followed by `npm start`.
+`docker compose up --build` defines the container setup on port 3800; container
+startup has not been exercised here because the Docker daemon is unavailable.
+Native production builds and browser flows were exercised instead.
 
----
+The default build hides simulated purchase notifications and generated ratings.
+`NEXT_PUBLIC_SHOW_SIMULATED_ACTIVITY=true` enables those demonstration components;
+they are sample activity, not evidence of real sales or customers.
 
-## Credentials were being published to the browser
+## Cart behavior
 
-The most serious finding. Both integrations read their secrets like this:
+The cart is stored in `localStorage`. A line is identified by product ID **and design
+ID**, so increasing or removing one design leaves other designs of the same product
+alone. Stored data is validated before use; malformed records are ignored, quantities
+are bounded, and prices with multiple separators parse consistently. The initial
+storage read completes before the cart is written back.
 
-```ts
-this.accessToken = process.env.NEXT_PUBLIC_WHATSAPP_ACCESS_TOKEN || ''
-this.emailApiKey  = process.env.NEXT_PUBLIC_EMAIL_API_KEY || ''
+```mermaid
+flowchart LR
+  Catalogue[Static catalogue] --> Product[Product and design selection]
+  Product --> Cart[Variant-aware cart reducer]
+  Cart <--> Storage[Validated local storage]
+  Cart --> Request[Customer request form]
+  Request --> Notify[Notification boundary]
+  Notify -->|Provider accepted a request| Sent[Show accepted channel status]
+  Notify -->|Unavailable or failed| Keep[Keep basket and show retry message]
 ```
 
-and then sent them from the browser:
+A client-generated reference is not proof of a durable order. The UI reports a sent
+request only when a provider accepts at least one channel, and it reports email and
+WhatsApp separately. If nothing is delivered the basket remains available.
 
-```ts
-headers: { 'Authorization': `Bearer ${this.accessToken}` }
+## Notification integration
+
+`POST /api/notify` is a server-side integration boundary, not a public email relay.
+It requires `Authorization: Bearer <NOTIFICATION_SERVICE_TOKEN>`, limits the request
+body to 16 KiB, validates recipients, and bounds provider requests to eight seconds.
+Keep this token on a trusted server; never expose it through `NEXT_PUBLIC_*`.
+
+| Server variable | Purpose |
+| --- | --- |
+| `NOTIFICATION_SERVICE_TOKEN` | Authorizes a trusted server-side order integration |
+| `EMAIL_API_KEY`, `EMAIL_SERVICE_URL` | Email provider credentials and endpoint |
+| `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` | WhatsApp provider credentials |
+| `WHATSAPP_API_URL` | Provider API base URL |
+
+Provider secrets stay outside browser bundles. No live notifications were sent during
+verification. A complete production checkout needs a backend that validates the
+catalogue, persists an order and calls this integration after that transaction. The
+browser demonstration cannot supply the internal token and therefore keeps the basket
+when notification delivery is unavailable.
+
+## Checks worth repeating
+
+```bash
+npm test
+npm run build
 ```
 
-**`NEXT_PUBLIC_` is not a namespace — it is an instruction to Next.js to inline
-the value into the client bundle.** A WhatsApp Business API token and an email
-provider key would both have been readable by anyone who opened devtools, and
-usable by anyone who took them.
+The regression suite covers independent design quantities/removal, renamed design
+metadata, invalid storage, quantity bounds, one notification request per submission,
+channel-specific results, provider failures and the authenticated sending boundary.
+Provider calls are mocked. The dependency lock uses patched Next.js 15.5.28 and
+compatible PostCSS/source-map updates; the production dependency audit reported no
+known advisories in the final local check.
 
-Nothing leaked in practice: no `.env` was ever committed, `.env*` is gitignored,
-and the variables were never set. But the code *required* them to be set in
-order to work, so the first successful deployment would have published them.
+## Where to change things
 
-Both now live server-side behind `POST /api/notify`, with no `NEXT_PUBLIC_`
-prefix, so Next.js cannot bundle them. Verified against the built image:
+- `src/lib/cart.ts` holds the pure cart rules; `CartContext` connects them to React and storage.
+- `src/app/product/[id]` and `src/components/ProductCard.tsx` render product choices.
+- `src/lib/notifications.ts` handles the browser request and channel results.
+- `src/app/api/notify/route.ts` owns provider access and input limits.
+- `src/lib/socialProof.ts` controls simulated activity.
+- `scripts/` contains optional asset-preparation tools; they are not part of startup.
 
-```
-$ for each chunk in /_next/static/chunks: grep WHATSAPP_ACCESS_TOKEN|EMAIL_API_KEY
-  no credential names appear in the client bundle
-```
+The catalogue has no stock source and prices in browser storage are not authoritative
+for charging. Cloudinary mappings are maintained by hand. The cart survives a local
+reload, but customer requests are not persisted by this application.
 
-`src/app/test-whatsapp/page.tsx` — a debug page shipped as a public route, and
-the last place reading the token client-side — was removed.
+## Author
 
----
-
-## Simulated customer activity
-
-Two features invent customers.
-
-`PurchaseNotifications` picks a name from a hardcoded list of fifteen every
-6–12 seconds:
-
-```ts
-const sampleCustomers = [
-  { name: 'Sarah A.', product: 'Pret Dress', avatar: '👩‍🦰' },
-  { name: 'Hiba M.',  product: 'Men Pocket Square', avatar: '👩‍🦳' },
-  ...
-]
-const timeOptions = ['1 min ago', '45 secs ago', '30 secs ago', ...]
-```
-
-and the header rating ticker cycles invented reviewers with
-`const randomRating = 4 + Math.random()`.
-
-No real customer is behind either. Presenting invented activity as real is a
-dark pattern, and in several jurisdictions it is unlawful — the UK's Digital
-Markets, Competition and Consumers Act 2024 prohibits fake consumer reviews and
-misleading urgency claims, and the EU's Unfair Commercial Practices Directive
-covers the same ground.
-
-**Neither has been deleted** — that is the owner's decision, not mine. Both are
-now behind `NEXT_PUBLIC_SHOW_SIMULATED_ACTIVITY`, which defaults to `false`, so
-the default build does not ship fabricated social proof. See
-`src/lib/socialProof.ts`.
-
----
-
-## What the README claimed and what exists
-
-| Claim | Reality |
-|---|---|
-| Product catalogue, search, cart | ✅ real — 22 files touch the cart |
-| Checkout flow | ✅ real |
-| SEO: meta tags, sitemap, robots.txt | ✅ `public/sitemap.xml`, `public/robots.txt` |
-| **PWA Ready: manifest and service worker** | ❌ neither `manifest.json` nor `sw.js` exists |
-| **User accounts and orders** | ❌ no authentication anywhere — zero files reference sign-in or sessions |
-
-The claims that were true are still claimed. The two that were not have been
-removed rather than implemented, because implementing accounts to make a README
-sentence true is the wrong way round.
-
-Orders are placed without an account: the basket is sent to the shop by
-WhatsApp and email. That is a legitimate model for a small retailer, and it is
-now what the README says.
-
----
-
-## The build could not run in a container
-
-`npm ci` failed compiling `mozjpeg` from source. It arrives via
-`imagemin-mozjpeg`, a **devDependency** used by the local asset-preparation
-scripts in `scripts/` — nothing in the application imports it, and `next build`
-does not need it. The install runs with `--ignore-scripts`, which also removes a
-supply-chain foothold.
-
----
-
-## Layout
-
-```
-src/
-├── app/
-│   ├── page.tsx              storefront
-│   ├── product/[id]/         product detail
-│   ├── cart/  checkout/      basket and order flow
-│   └── api/notify/route.ts   server-side order notification   ← added
-├── components/
-│   ├── Navigation.tsx        header, search, cart count
-│   └── PurchaseNotifications.tsx   simulated activity (off by default)
-└── lib/
-    ├── notifications.ts      posts to /api/notify
-    ├── whatsapp.ts           message formatting
-    └── socialProof.ts        the simulated-activity switch   ← added
-scripts/                      local image compression and Cloudinary upload
-```
-
-## Configuration
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `EMAIL_API_KEY` / `EMAIL_SERVICE_URL` | empty | Server-only. Order confirmation email |
-| `WHATSAPP_ACCESS_TOKEN` / `WHATSAPP_PHONE_NUMBER_ID` | empty | Server-only. Order notification |
-| `NEXT_PUBLIC_SHOW_SIMULATED_ACTIVITY` | `false` | Invented purchase popups and ratings |
-
-Note which of these carry `NEXT_PUBLIC_` and which do not. That prefix is the
-difference between a secret and a published string.
-
-## Known limitations
-
-- **No tests.** This is the largest gap. The bugs found here — a credential in
-  the client bundle, a README claiming features that do not exist — are not the
-  kind unit tests catch, but a build-time check that greps the bundle for
-  credential names would have caught the first one, and is worth adding.
-- **No backend or database.** The catalogue is static data in the repository;
-  there are no API routes besides `/api/notify`, no persistence, and no stock
-  levels. Nothing prevents ordering an item that is gone.
-- **A personal phone number is displayed** in the header and footer
-  (`+92 328-3250250`). Fine for a real shop that owns it, worth checking before
-  this repository is public.
-- **No payment integration.** Checkout collects details and notifies the shop;
-  money is handled out of band.
-- **Product data is not validated.** `cloudinary-images.json` maps products to
-  image URLs by hand, and a mismatch shows a broken image rather than failing
-  the build.
+[**Muhammad Nadeem**](https://github.com/dev-mnadeem)

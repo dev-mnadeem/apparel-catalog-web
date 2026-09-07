@@ -49,8 +49,6 @@ public/images/products-*/
 !public/images/banners/
 !public/images/categories/
 !public/images/icon.png
-temp_auto_push.bat
-temp_interactive_push.bat
 project_venv/
 venv/
 .venv/
@@ -65,3 +63,5 @@ build/
 .env
 .env.local
 coverage/
+
+!.env.example

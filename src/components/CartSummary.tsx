@@ -29,13 +29,13 @@ export default function CartSummary() {
         <ShoppingBagIcon className="h-5 w-5 mr-2" />
         Cart Summary
       </h3>
-      
+
       {/* Cart Items */}
       <div className="space-y-3 mb-6">
         {state.items.map((item) => (
-          <div key={item.id} className="flex items-center space-x-3">
-            <img 
-              src={item.image} 
+          <div key={`${item.id}-${item.selectedDesign?.id ?? 'standard'}`} className="flex items-center space-x-3">
+            <img
+              src={item.image}
               alt={item.name}
               className="w-12 h-12 object-cover rounded-lg"
             />
@@ -75,6 +75,3 @@ export default function CartSummary() {
     </div>
   )
 }
-
-
-

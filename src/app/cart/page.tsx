@@ -8,11 +8,11 @@ import { useCart } from '@/contexts/CartContext'
 export default function CartPage() {
   const { state, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart()
 
-  const handleUpdateQuantity = (id: number, newQuantity: number) => {
+  const handleUpdateQuantity = (id: number, newQuantity: number, designId?: number) => {
     if (newQuantity <= 0) {
-      removeFromCart(id)
+      removeFromCart(id, designId)
     } else {
-      updateQuantity(id, newQuantity)
+      updateQuantity(id, newQuantity, designId)
     }
   }
 
@@ -92,7 +92,7 @@ export default function CartPage() {
                       {item.name}
                     </h3>
                     <p className="text-sm text-gray-600 mb-2">{item.category}</p>
-                    
+
                     {/* Custom Design Selection */}
                     {item.selectedDesign && (
                       <div className="mb-3">
@@ -117,7 +117,7 @@ export default function CartPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <button
-                          onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                          onClick={() => handleUpdateQuantity(item.id, item.quantity - 1, item.selectedDesign?.id)}
                           className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors duration-200"
                           aria-label="Decrease quantity"
                         >
@@ -125,7 +125,7 @@ export default function CartPage() {
                         </button>
                         <span className="text-lg font-medium w-8 text-center">{item.quantity}</span>
                         <button
-                          onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                          onClick={() => handleUpdateQuantity(item.id, item.quantity + 1, item.selectedDesign?.id)}
                           className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors duration-200"
                           aria-label="Increase quantity"
                         >
@@ -135,7 +135,7 @@ export default function CartPage() {
 
                       {/* Remove Button */}
                       <button
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.id, item.selectedDesign?.id)}
                         className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors duration-200"
                         aria-label="Remove item"
                       >
@@ -152,7 +152,7 @@ export default function CartPage() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-8">
               <h2 className="text-xl font-bold text-black mb-6">Order Summary</h2>
-              
+
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal ({state.totalItems} items)</span>
@@ -181,7 +181,7 @@ export default function CartPage() {
                     Add <strong>Rs.{(3000 - state.totalPrice).toLocaleString()}</strong> more to get free shipping!
                   </p>
                   <div className="mt-2 bg-amber-200 rounded-full h-2">
-                    <div 
+                    <div
                       className="bg-amber-500 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${Math.min((state.totalPrice / 3000) * 100, 100)}%` }}
                     ></div>

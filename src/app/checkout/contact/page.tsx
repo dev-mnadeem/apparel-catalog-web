@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { notificationService, type OrderDetails } from '@/lib/notifications'
-import { 
-  ShoppingBagIcon, 
-  PhoneIcon, 
-  UserIcon, 
+import {
+  ShoppingBagIcon,
+  PhoneIcon,
+  UserIcon,
   MapPinIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
@@ -45,6 +45,7 @@ export default function ContactPage() {
   const [error, setError] = useState('')
   const [whatsappFailed, setWhatsappFailed] = useState(false)
   const [orderTotal, setOrderTotal] = useState('')
+  const [delivery, setDelivery] = useState({ whatsappSent: false, emailSent: false })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -89,31 +90,15 @@ export default function ContactPage() {
       // Store the total before clearing cart
       setOrderTotal(getCartTotal())
 
-      // Send comprehensive order confirmation (WhatsApp + Email)
-      console.log('🚀 Sending order confirmations...')
-      console.log('📱 Customer phone number:', orderDetails.phoneNumber)
-      console.log('📧 Customer email:', orderDetails.email)
-      
-      const notificationResult = await notificationService.sendOrderConfirmation(orderDetails)
-      console.log('📊 Notification result:', notificationResult)
-      
-      // Log detailed results
-      if (notificationResult.whatsappSent) {
-        console.log('✅ WhatsApp confirmation sent successfully')
-      } else {
-        console.log('❌ WhatsApp confirmation failed:', notificationResult.errors)
+      const result = await notificationService.sendOrderConfirmation(orderDetails)
+      setDelivery(result)
+      if (!result.success) {
+        setError('The request could not be sent. Your basket has been kept; please try again later.')
+        return
       }
-      
-      if (notificationResult.emailSent) {
-        console.log('✅ Email confirmation sent successfully')
-      } else {
-        console.log('❌ Email confirmation failed:', notificationResult.errors)
-      }
-
-      // Always show success - notifications are automatic
       setOrderSuccess(true)
-      setWhatsappFailed(false) // Never show manual option
-      clearCart() // Clear cart immediately
+      setWhatsappFailed(!result.whatsappSent)
+      clearCart()
 
     } catch (err) {
       setError('There was an error processing your order. Please try again.')
@@ -157,11 +142,11 @@ export default function ContactPage() {
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircleIcon className="h-10 w-10 text-green-600" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Order Confirmed! 🎉</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Request sent</h1>
             <p className="text-lg text-gray-600 mb-8">
-              Thank you for your order! We've sent confirmation messages to your contact information.
+              Your request was accepted by a notification provider. Stock, payment and fulfilment still need confirmation from the shop.
             </p>
-            
+
             <div className="bg-gray-50 rounded-xl p-6 mb-8 text-left">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                 <ShieldCheckIcon className="h-5 w-5 mr-2 text-green-600" />
@@ -189,10 +174,10 @@ export default function ContactPage() {
 
             <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-8">
               <div className="text-center mb-4">
-                <h3 className="font-semibold text-green-800 text-lg mb-2">Confirmation Messages Sent!</h3>
-                <p className="text-green-700 text-sm">We've automatically sent order confirmations to:</p>
+                <h3 className="font-semibold text-green-800 text-lg mb-2">Notification status</h3>
+                <p className="text-green-700 text-sm">The provider accepted the channels shown below:</p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* WhatsApp Status */}
                 <div className="flex items-center p-3 bg-white rounded-lg border border-green-200">
@@ -201,7 +186,7 @@ export default function ContactPage() {
                   </div>
                   <div className="flex-1">
                     <h4 className="font-medium text-gray-900">WhatsApp</h4>
-                    <p className="text-sm text-green-600">✅ Confirmation sent automatically</p>
+                    <p className="text-sm text-green-600">{delivery.whatsappSent ? 'Accepted by provider' : 'Not sent'}</p>
                   </div>
                 </div>
 
@@ -214,15 +199,14 @@ export default function ContactPage() {
                   </div>
                   <div className="flex-1">
                     <h4 className="font-medium text-gray-900">Email</h4>
-                    <p className="text-sm text-green-600">✅ Confirmation sent</p>
+                    <p className="text-sm text-green-600">{delivery.emailSent ? 'Accepted by provider' : 'Not sent'}</p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                 <p className="text-blue-700 text-sm text-center">
-                  <strong>✨ Fully Automated!</strong> Both WhatsApp and email confirmations are sent automatically. 
-                  No manual action needed from you or your customers.
+                  This page does not reserve inventory or process a payment.
                 </p>
               </div>
             </div>
@@ -245,8 +229,8 @@ export default function ContactPage() {
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link 
-              href="/checkout" 
+            <Link
+              href="/checkout"
               className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeftIcon className="h-5 w-5 mr-2" />
@@ -350,7 +334,7 @@ export default function ContactPage() {
                     />
                     <p className="text-sm text-gray-600 mt-2 flex items-center">
                       <CheckCircleIcon className="h-4 w-4 mr-2 text-green-600" />
-                      We'll send order confirmation to this WhatsApp number
+                      The shop can use this number to discuss your request
                     </p>
                   </div>
 
@@ -452,7 +436,7 @@ export default function ContactPage() {
                     ) : (
                       <>
                         <PhoneIcon className="h-6 w-6 mr-3" />
-                        Place Order & Get WhatsApp Confirmation
+                        Send order request
                       </>
                     )}
                   </button>
@@ -480,8 +464,8 @@ export default function ContactPage() {
                     <div className="flex justify-between font-bold text-lg">
                       <span>Total</span>
                       <span className="text-amber-600">
-                        {parseFloat(getCartTotal().replace('Rs.', '').replace(',', '')) >= 3000 
-                          ? getCartTotal() 
+                        {parseFloat(getCartTotal().replace('Rs.', '').replace(',', '')) >= 3000
+                          ? getCartTotal()
                           : `Rs. ${parseFloat(getCartTotal().replace('Rs.', '').replace(',', '')) + 200}`
                         }
                       </span>
@@ -496,7 +480,7 @@ export default function ContactPage() {
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <PhoneIcon className="h-8 w-8 text-green-600" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900">WhatsApp Order Confirmation</h3>
+                  <h3 className="text-lg font-bold text-gray-900">Request contact details</h3>
                 </div>
                 <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex items-start">
